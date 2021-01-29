@@ -4,10 +4,10 @@ import Game.Mars.Mountain;
 import Game.station.ModuleOxg;
 import Game.station.Station;
 import Game.station.detail.Gateway;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.AudioDevice;
-import javazoom.jl.player.JavaSoundAudioDevice;
-import javazoom.jl.player.advanced.AdvancedPlayer;
+//import javazoom.jl.decoder.JavaLayerException;
+//import javazoom.jl.player.AudioDevice;
+//import javazoom.jl.player.JavaSoundAudioDevice;
+//import javazoom.jl.player.advanced.AdvancedPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,9 +29,9 @@ public class MainGame {
     public static int groundY;
 
     //music and sound effects
-    public static AdvancedPlayer ap;
+//    public static AdvancedPlayer ap;
     public static String musicpath = "";
-    public static Music music = new Music();
+    //public static Music music = new Music();
     static Sound sound = new Sound();
 
     //objects
@@ -39,7 +39,6 @@ public class MainGame {
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
     public static Greenhouse greenhouse;
-    public static Potato potato;
 
     //hero and objects
     Pers pers;
@@ -64,7 +63,7 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         rover = new Rover();
         pers = new Pers();
-        greenhouse = new Greenhouse(1800, groundY-113);
+        greenhouse = new Greenhouse(2300, groundY-113);
 
         panel = new JPanel() {
             @Override
@@ -100,25 +99,24 @@ public class MainGame {
             g.drawImage(station.gateway[i].getImage(), station.gateway[i].getX(), station.gateway[i].getY(),null);
             g.drawImage(greenhouse.gateway[i].getImage(), greenhouse.gateway[i].getX(), greenhouse.gateway[i].getY(),null);
         }
-        ///g.drawImage(rover.getImage(), rover.getX(), rover.getY(),null);
-        g.drawImage(potato.getImage(), potato.getX(),potato.getY(),null);
+        g.drawImage(player[0].getImg(), player[0].getX(), player[0].getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
     }
 
-    static class Music extends Thread {
-        @Override
-        public void run() {
-            try {
-                InputStream is = new FileInputStream(musicpath);
-                AudioDevice device = new JavaSoundAudioDevice();
-                ap = new AdvancedPlayer(is, device);
-                ap.play();
-                ap.stop();
-                ap.close();
-            } catch (FileNotFoundException | JavaLayerException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    static class Music extends Thread {
+//        @Override
+//        public void run() {
+//            try {
+//                InputStream is = new FileInputStream(musicpath);
+//                AudioDevice device = new JavaSoundAudioDevice();
+//                ap = new AdvancedPlayer(is, device);
+//                ap.play();
+//                ap.stop();
+//                ap.close();
+//            } catch (FileNotFoundException | JavaLayerException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
 

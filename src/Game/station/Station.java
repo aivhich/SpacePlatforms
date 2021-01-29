@@ -15,8 +15,8 @@ public class Station {
     public Station(int x, int y) {
         this.x = x;
         this.y = y;
-        gateway[1] = new Gateway(1, x + img.getWidth(null)+MainGame.moduleOxg.getImg().getWidth(null), MainGame.groundY - (img.getHeight(null) / 2 - 10));
-        gateway[0] = new Gateway(2, x + img.getWidth(null)-66, MainGame.groundY - (img.getHeight(null) / 2 - 10));
+        gateway[1] = new Gateway(1, x + img.getWidth(null)+MainGame.moduleOxg.getImg().getWidth(null)-2, MainGame.groundY - (img.getHeight(null) / 2 - 10));
+        gateway[0] = new Gateway(2, x + img.getWidth(null)-105, MainGame.groundY - (img.getHeight(null) / 2 - 10));
     }
 
     public static int getX() {

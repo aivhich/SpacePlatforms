@@ -13,7 +13,7 @@ public class Greenhouse {
         this.x = x;
         this.y = y;
         gateway[1]=new Gateway(1, x+48, y+30);
-        gateway[0]=new Gateway(2, x-48, y+30);
+        gateway[0]=new Gateway(2, x-90, y+30);
     }
 
 
