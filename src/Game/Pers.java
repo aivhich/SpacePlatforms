@@ -81,6 +81,14 @@ public class Pers implements KeyListener {
                     Jump();
                 }
                 break;
+            case KeyEvent.VK_R:
+                if (aircar.Ttraction != null && aircar.Ttraction.isRunning())return;
+                aircar.traction(1);
+                break;
+            case KeyEvent.VK_F:
+                if (aircar.Ttraction != null && aircar.Ttraction.isRunning())return;
+                aircar.traction(-1);
+                break;
             case KeyEvent.VK_P:
                 doors();
                 break;

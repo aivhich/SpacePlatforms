@@ -1,6 +1,7 @@
 package Game;
 
 import Game.Mars.Mountain;
+import Game.car.Aircar;
 import Game.station.ModuleOxg;
 import Game.station.Station;
 import Game.station.detail.Gateway;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 public class MainGame {
     static JFrame frame;
     public static JPanel panel;
-    JLabel radiation, oxygen, live;
+    JLabel radiation, oxygen, live, traction;
 
     //images
     Image fon = new ImageIcon("image/spacemap1.png").getImage();
@@ -39,6 +40,8 @@ public class MainGame {
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
     public static Greenhouse greenhouse;
+    public static Aircar aircar;
+
 
     //hero and objects
     Pers pers;
@@ -61,6 +64,7 @@ public class MainGame {
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
+        aircar = new Aircar(1000, groundY);
         rover = new Rover();
         pers = new Pers();
         greenhouse = new Greenhouse(2300, groundY-113);
@@ -98,6 +102,10 @@ public class MainGame {
         for(int i=0; i<2; i++){
             g.drawImage(station.gateway[i].getImage(), station.gateway[i].getX(), station.gateway[i].getY(),null);
             g.drawImage(greenhouse.gateway[i].getImage(), greenhouse.gateway[i].getX(), greenhouse.gateway[i].getY(),null);
+        }
+        g.drawImage(aircar.getImg(), aircar.getX(), aircar.getY(), null);
+        for(int i=0; i<3; i++){
+            g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
         g.drawImage(player[0].getImg(), player[0].getX(), player[0].getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
