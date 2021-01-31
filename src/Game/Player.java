@@ -13,22 +13,13 @@ public class Player{
     private static Image img = new ImageIcon("image/Pers/orange/humanl0.png").getImage();
     private static int x,y;
     Timer anim;
-    int speed=-1;
+    int speed=1;
     boolean collis = false;
 
     Player(int x, int y) {
         this.x = x;
         this.y = y;
-        if(speed>0){
-            speed=-1;
-            Collis(x, y, -1);
-            Anim();
-        }
-        else if(speed<0) {
-            speed = 1;
-            Collis(x, y, 1);
-            Anim();
-        }
+        Anim();
     }
 
     public int getX() {
@@ -64,19 +55,16 @@ public class Player{
         anim = new Timer(120, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!collis){
                     if (speed < 0) img = new ImageIcon("image/pers/orange/human" + i + ".png").getImage();
                     if (speed > 0) img = new ImageIcon("image/pers/orange/humanl" + i + ".png").getImage();
                     i++;
                     x += k * speed;
-                    MainGame.panel.repaint();
+
                     if (i > 4) {
                         i = 0;
                         anim.stop();
                     }
-                }else{
-                    speed=speed*-1;
-                }
+                MainGame.panel.repaint();
             }
         });
         anim.start();
