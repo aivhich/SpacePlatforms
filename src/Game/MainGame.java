@@ -35,6 +35,7 @@ public class MainGame {
     //public static Music music = new Music();
     static Sound sound = new Sound();
 
+    public static JLabel thrustL;
     //objects
     public static Station station;
     public static Mountain mountain;
@@ -60,6 +61,19 @@ public class MainGame {
             player[i]=new Player(200, groundY-Player.getImg().getHeight(null));
         }
 
+        panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drowing(g);
+            }
+        };
+        panel.setLayout(null);
+
+        thrustL = new JLabel("Thrust:");
+        thrustL.setBounds(20,1,200,50);
+        thrustL.setForeground(Color.white);
+        panel.add(thrustL);
         ///create objects
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
@@ -69,15 +83,7 @@ public class MainGame {
         pers = new Pers();
         greenhouse = new Greenhouse(2300, groundY-113);
 
-        panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                drowing(g);
-            }
-        };
 
-        panel.setLayout(null);
 
         radiation = new JLabel("Radiation level:");
         radiation.setBounds(10, 10, 200,45);
