@@ -15,6 +15,7 @@ public class Aircar extends Thread {
     int x, y, k;
     int imax;
     int thrust=0;
+    boolean inPilot;
     public Timer Down, start, Up, TThrust;
     boolean switchFire, switchAnim=true;
     public Engeen[] engeens = new Engeen[3];
@@ -119,7 +120,7 @@ public class Aircar extends Thread {
         });
         Up.start();
     }
-    void Collis(int x, int y, int e) {
+    void CarCollis(int x, int y, int e) {
         if ((x >= Station.getX()+40 && x+img.getWidth(null) <= (Station.getX() + Station.getImg().getWidth(null)-40))
                 && (y >= Station.getY() && y <= Station.getY() + Station.getImg().getHeight(null))) {
             collis = true;

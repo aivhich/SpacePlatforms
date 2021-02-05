@@ -91,6 +91,7 @@ public class Pers implements KeyListener {
                 break;
             case KeyEvent.VK_P:
                 doors();
+                aircar.CarCollis();
                 break;
         }
         MainGame.panel.repaint();
