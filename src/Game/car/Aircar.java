@@ -11,13 +11,13 @@ import static Game.MainGame.*;
 
 public class Aircar {
     Image img = new ImageIcon("image/aircar/aircar.png").getImage();
-    int x, y;
+    int x, y, k;
     int imax;
-    int mass = 2;
     int traction=0;
-    public Timer drop, start, gravity, TThrust;
-    boolean switchFire;
+    public Timer Down, start, Up, TThrust;
+    boolean switchFire, switchAnim=true;
     public Engeen[] engeens = new Engeen[3];
+    int Gup, Gdown;
 
 
     public Aircar(int x, int y) {
@@ -54,42 +54,6 @@ public class Aircar {
         this.y = y;
     }
 
-    int St;
-    void startUp(){
-        start = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(traction>=5) {
-                    St=1;
-                }
-                St++;
-                for(int w=0; w<3; w++){
-                    engeens[w].setImg(new ImageIcon("image/aircar/engeen"+St+".png").getImage());
-                }
-                if(traction>3){
-                    y-=traction;
-                    for(int w=0; w<3; w++)engeens[w].setY(engeens[w].getY()-1*traction);
-                }else {
-                    y+=traction;
-                    for(int w=0; w<3; w++)engeens[w].setY(engeens[w].getY()+1*traction);
-                }
-                if(St>=3){
-                    if(traction>=5) {
-                        St = 1;
-                    }else {
-                        St = 0;
-                    }
-                    start.stop();
-                }
-                if(traction==0){
-                    start.stop();
-                    drop();
-                }
-                panel.repaint();
-            }
-        });
-        start.start();
-    }
     public void thrust(int k){
         TThrust = new Timer(80, new ActionListener() {
             @Override
@@ -99,26 +63,47 @@ public class Aircar {
                 }
                 MainGame.thrustL.setText("Thrust: "+traction);
                 TThrust.stop();
-                if (aircar.start != null && aircar.start.isRunning()) return;
-                startUp();
+                if (aircar.Up != null && aircar.Up.isRunning()) return;
+                up();
             }
         });
         TThrust.start();
     }
-    void drop(){
-        drop = new Timer(100, new ActionListener() {
+    void down(){
+        if(y+img.getHeight(null)+20<groundY){
+            y+=4;
+            for(int w =0; w<3; w++){
+                engeens[w].setY(engeens[w].getY()+4);
+            }
+            if(traction<=1) {
+                for (int w = 0; w < 3; w++) {
+                    engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
+                }
+            }
+        }else{
+            if(traction<=1) {
+                for (int w = 0; w < 3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
+                if (aircar.Up != null && aircar.Up.isRunning()) return;
+                Up.stop();
+            }
+        }
+    }
+    int st;
+    void up(){
+        Up = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(y+img.getHeight(null)<=groundY) {
-                    y += (mass*1);
-                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (mass*1));
-                    for (int w = 0; w < 3; w++)engeens[w].setImg(new ImageIcon("image/aircar/engeen"+0+".png").getImage());
-                }else{
-                    drop.stop();
+                st++;
+                y-= 1*traction;
+                for(int w =0; w<3; w++){
+                    engeens[w].setY(engeens[w].getY()-(1*traction));
                 }
+                for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());
+                if(st>=2)st=1;
+                down();
                 panel.repaint();
             }
         });
-        drop.start();
+        Up.start();
     }
 }
