@@ -33,7 +33,7 @@ public class MainGame {
 //    public static AdvancedPlayer ap;
     public static String musicpath = "";
     //public static Music music = new Music();
-    static Sound sound = new Sound();
+    public static Sound sound = new Sound();
 
     public static JLabel thrustL;
     //objects

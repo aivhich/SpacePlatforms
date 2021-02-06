@@ -20,9 +20,9 @@ public class Pers implements KeyListener {
     int speed;
     boolean home = true;
     boolean Open = false;
-    int Doorport = 0;
+    int Doorport = 0;    boolean inTranport = false;
+
     boolean collis = true;
-    boolean inTranport = false;
 
     Pers() {
         MainGame.frame.addKeyListener(this);
@@ -91,7 +91,7 @@ public class Pers implements KeyListener {
                 break;
             case KeyEvent.VK_P:
                 doors();
-                aircar.CarCollis();
+                //aircar.CarCollis();
                 break;
         }
         MainGame.panel.repaint();

@@ -100,19 +100,23 @@ public class Aircar extends Thread {
     }
     int st;
     void up(){
+        MainGame.sound.playSound("sound/engeenfire.wav");
         Up = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 st++;
-                y-= 1*thrust;
-                for(int w =0; w<3; w++){
-                    engeens[w].setY(engeens[w].getY()-(1*thrust));
+                if(thrust>2) {
+                    y -= 1 * thrust;
+                    for (int w = 0; w < 3; w++) {
+                        engeens[w].setY(engeens[w].getY() - (1 * thrust));
+                    }
                 }
                 if(thrust>=1){for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());}
                 if(st>=2)st=1;
                 if(thrust==0){
                     if (aircar.Down != null && aircar.Down.isRunning()) return;
                     down();
+                    MainGame.sound.close();
                     Up.stop();
                 }
                 panel.repaint();
