@@ -1,6 +1,7 @@
 package Game.car;
 
 import Game.MainGame;
+import Game.Pers;
 import Game.station.Station;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.event.ActionListener;
 import static Game.MainGame.*;
 
 public class Aircar extends Thread {
-    Image img = new ImageIcon("image/aircar/aircar.png").getImage();
+    Image img = new ImageIcon("image/aircar/aircar1.png").getImage();
     int x, y, k;
     int imax;
     int thrust=0;
@@ -19,7 +20,7 @@ public class Aircar extends Thread {
     public Timer Down, start, Up, TThrust;
     boolean switchFire, switchAnim=true;
     public Engeen[] engeens = new Engeen[3];
-    int speed;
+    int speed, yspeed;
     boolean collis;
 
 
@@ -56,6 +57,9 @@ public class Aircar extends Thread {
     }
 
     public void thrust(int k){
+        if(thrust>0) {
+            MainGame.sound.playSound("sound/engeenfire.wav");
+        }
         TThrust = new Timer(80, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +70,9 @@ public class Aircar extends Thread {
                 TThrust.stop();
                 if (aircar.Up != null && aircar.Up.isRunning()) return;
                 up();
+                if(thrust>0) {
+                    MainGame.sound.playSound("sound/engeenfire.wav");
+                }
             }
         });
         TThrust.start();
@@ -75,19 +82,20 @@ public class Aircar extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (y + img.getHeight(null) + 20 < groundY) {
-                    y += 8;
-                    for (int w = 0; w < 3; w++) {
-                        engeens[w].setY(engeens[w].getY() + 8);
-                    }
+                    y += 1+yspeed;
+                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1+yspeed));
+                    yspeed+=1;
                     if (thrust == 0) {
                         for (int w = 0; w < 3; w++) {
                             engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
                         }
                     }
                 }else{
+                    y=groundY-img.getHeight(null)-20;
+                    for (int w = 0; w < 3; w++) engeens[w].setY(y+img.getHeight(null)-10);
                     if (thrust == 0) {
-                        for (int w = 0; w < 3; w++)
-                            engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
+                        yspeed =0;
+                        for (int w = 0; w < 3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
                         if (aircar.Up != null && aircar.Up.isRunning()) return;
                         Up.stop();
                     }
@@ -99,39 +107,32 @@ public class Aircar extends Thread {
         Down.start();
     }
     int st;
+    int nCadr = 0;
     void up(){
-        MainGame.sound.playSound("sound/engeenfire.wav");
         Up = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                st++;
+                if (aircar.Down != null && aircar.Down.isRunning()) Down.stop();
                 if(thrust>2) {
-                    y -= 1 * thrust;
-                    for (int w = 0; w < 3; w++) {
-                        engeens[w].setY(engeens[w].getY() - (1 * thrust));
-                    }
+                    y -= (1 * thrust);
+                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() - ((1 * thrust)));
+                }else if((thrust<2)&&(y + img.getHeight(null) + 20 < groundY)){
+                    y -= (-1 * thrust);
+                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() - ((-1 * thrust)));
                 }
                 if(thrust>=1){for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());}
-                if(st>=2)st=1;
                 if(thrust==0){
                     if (aircar.Down != null && aircar.Down.isRunning()) return;
                     down();
                     MainGame.sound.close();
                     Up.stop();
                 }
+                if(nCadr>=10){nCadr=0; st++;}
+                else{nCadr++;}
+                if(st>2){st=1;nCadr=0;}
                 panel.repaint();
             }
         });
         Up.start();
-    }
-    void CarCollis(int x, int y, int e) {
-        if ((x >= Station.getX()+40 && x+img.getWidth(null) <= (Station.getX() + Station.getImg().getWidth(null)-40))
-                && (y >= Station.getY() && y <= Station.getY() + Station.getImg().getHeight(null))) {
-            collis = true;
-        }else{
-            collis = false;
-            if(speed>0 && e<0){collis=true;}
-            else if(speed<0 && e>0){collis=true;}
-        }
     }
 }

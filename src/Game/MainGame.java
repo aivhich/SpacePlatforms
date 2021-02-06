@@ -35,13 +35,14 @@ public class MainGame {
     //public static Music music = new Music();
     public static Sound sound = new Sound();
 
-    public static JLabel thrustL;
+    public static JLabel thrustL, messageL;
     //objects
     public static Station station;
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
     public static Greenhouse greenhouse;
     public static Aircar aircar;
+    private Font Msg = new Font("TimesRoman", Font.BOLD, 35);
 
 
     //hero and objects
@@ -70,17 +71,22 @@ public class MainGame {
         };
         panel.setLayout(null);
 
+        messageL = new JLabel("Waring!");
         thrustL = new JLabel("Thrust:");
         thrustL.setBounds(20,1,200,50);
+        messageL.setBounds(frame.getWidth()/2-100,80,300,50);
+        messageL.setFont(Msg);
         thrustL.setForeground(Color.white);
+        messageL.setForeground(Color.YELLOW);
         panel.add(thrustL);
+        panel.add(messageL);
         ///create objects
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
-        aircar = new Aircar(1000, groundY);
         rover = new Rover();
         pers = new Pers();
+        aircar = new Aircar(1000, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
 
 
