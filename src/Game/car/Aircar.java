@@ -87,6 +87,7 @@ public class Aircar extends Thread {
                     yspeed+=1;
                     if (thrust == 0) {
                         for (int w = 0; w < 3; w++) {
+                            if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                             engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
                         }
                     }
@@ -114,7 +115,15 @@ public class Aircar extends Thread {
             public void actionPerformed(ActionEvent e) {
                 x += thrust * speed*3;
                 pers.setX(pers.getX()+thrust * speed*3);
-                for (int w = 0; w < 3; w++) engeens[w].setX(engeens[w].getX() + (thrust * speed*3));
+                for (int w = 0; w < 3; w++) {
+                    engeens[w].setX(engeens[w].getX() + (thrust * speed*3));
+                    if (aircar.Up != null && aircar.Up.isRunning()) {
+                        if (speed > 0)
+                            engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + "R.png").getImage());
+                        if (speed < 0)
+                            engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + "L.png").getImage());
+                    }
+                }
                 panel.repaint();
                 Motion.stop();
             }
@@ -136,7 +145,12 @@ public class Aircar extends Thread {
                     if(pers.isInTranport()==true) pers.y+=(1 * thrust);
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1 * thrust));
                 }
-                if(thrust>=1){for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());}
+                if(thrust>=1){
+                    for (int w = 0; w < 3; w++) {
+                        if (aircar.Motion != null && aircar.Motion.isRunning()&&!(aircar.Motion != null && aircar.Motion.isRunning())) return;
+                        engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + ".png").getImage());
+                    }
+                }
                 if(thrust==0){
                     if (aircar.Down != null && aircar.Down.isRunning()) return;
                     down();

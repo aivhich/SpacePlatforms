@@ -86,7 +86,7 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         rover = new Rover();
         pers = new Pers();
-        aircar = new Aircar(1400, groundY);
+        aircar = new Aircar(1100, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
 
         radiation = new JLabel("Radiation level:");
