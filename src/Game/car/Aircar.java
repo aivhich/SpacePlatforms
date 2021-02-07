@@ -16,11 +16,10 @@ public class Aircar extends Thread {
     int x, y, k;
     int imax;
     int thrust=0;
-    boolean inPilot;
-    public Timer Down, start, Up, TThrust;
+    public Timer Down, Motion, Up, TThrust;
     boolean switchFire, switchAnim=true;
     public Engeen[] engeens = new Engeen[3];
-    int speed, yspeed;
+    public int speed, yspeed;
     boolean collis;
 
 
@@ -83,6 +82,7 @@ public class Aircar extends Thread {
             public void actionPerformed(ActionEvent e) {
                 if (y + img.getHeight(null) + 20 < groundY) {
                     y += 1+yspeed;
+                    if(pers.isInTranport()==true) pers.y+=1+yspeed;
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1+yspeed));
                     yspeed+=1;
                     if (thrust == 0) {
@@ -108,6 +108,20 @@ public class Aircar extends Thread {
     }
     int st;
     int nCadr = 0;
+    public void motion(){
+        Motion = new Timer(10, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                x += thrust * speed*3;
+                pers.setX(pers.getX()+thrust * speed*3);
+                for (int w = 0; w < 3; w++) engeens[w].setX(engeens[w].getX() + (thrust * speed*3));
+                panel.repaint();
+                Motion.stop();
+            }
+        });
+        Motion.start();
+    }
+
     void up(){
         Up = new Timer(20, new ActionListener() {
             @Override
@@ -115,9 +129,11 @@ public class Aircar extends Thread {
                 if (aircar.Down != null && aircar.Down.isRunning()) Down.stop();
                 if(thrust>2) {
                     y += (-1 * thrust);
+                    if(pers.isInTranport()==true) pers.y+=(-1 * thrust);
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (-1 * thrust));
                 }else if((thrust<2)&&(y + img.getHeight(null) + 20 < groundY)){
                     y += (1 * thrust);
+                    if(pers.isInTranport()==true) pers.y+=(1 * thrust);
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1 * thrust));
                 }
                 if(thrust>=1){for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());}

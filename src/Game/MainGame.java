@@ -42,11 +42,11 @@ public class MainGame {
     public static ModuleOxg moduleOxg;
     public static Greenhouse greenhouse;
     public static Aircar aircar;
-    private Font Msg = new Font("TimesRoman", Font.BOLD, 35);
+    private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
 
 
     //hero and objects
-    Pers pers;
+    public static Pers pers;
     Player player[] = new Player[1];
     static Rover rover;
 
@@ -71,10 +71,10 @@ public class MainGame {
         };
         panel.setLayout(null);
 
-        messageL = new JLabel("Message!");
+        messageL = new JLabel("");
         thrustL = new JLabel("Thrust:");
         thrustL.setBounds(20,1,200,50);
-        messageL.setBounds(frame.getWidth()/2-100,80,300,50);
+        messageL.setBounds(frame.getWidth()/2-400,80,800,50);
         messageL.setFont(Msg);
         thrustL.setForeground(Color.white);
         messageL.setForeground(Color.YELLOW);
@@ -86,19 +86,15 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         rover = new Rover();
         pers = new Pers();
-        aircar = new Aircar(1000, groundY);
+        aircar = new Aircar(1400, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
-
-
 
         radiation = new JLabel("Radiation level:");
         radiation.setBounds(10, 10, 200,45);
         radiation.setIcon(new ImageIcon("image/radiation.png"));
         frame.add(panel);
-        //panel.add(radiation);
         frame.setVisible(true);
         panel.repaint();
-
     }
 
     void drowing(Graphics g){
@@ -121,6 +117,7 @@ public class MainGame {
         }
         g.drawImage(player[0].getImg(), player[0].getX(), player[0].getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
+
     }
 
 //    static class Music extends Thread {

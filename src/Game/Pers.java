@@ -1,5 +1,6 @@
 package Game;
 
+import Game.car.Aircar;
 import Game.station.Station;
 import com.sun.tools.javac.Main;
 
@@ -15,7 +16,8 @@ import static Game.MainGame.*;
 
 public class Pers implements KeyListener {
     private static Image image = new ImageIcon("image/pers/human0.png").getImage();
-    private static int x = 795, y = groundY - image.getHeight(null)-3;
+    private static int x = 795;
+    public static int y = groundY - image.getHeight(null)-3;
     Timer anim, jump, down;
     int speed;
     boolean home = true;
@@ -23,6 +25,7 @@ public class Pers implements KeyListener {
     int Doorport = 0;
     boolean inTranport = false;
 
+    boolean Thingscollis= false;
     boolean collis = true;
 
     Pers() {
@@ -56,23 +59,35 @@ public class Pers implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_D:
-                if (anim != null && anim.isRunning()) return;
-                Collis(x, y, 1);
-                speed = 1;
-                if (collis&&home) {
-                    Anim();
-                }else if(!home){
-                    Anim();
+                if(!inTranport) {
+                    if (anim != null && anim.isRunning()) return;
+                    Collis(x, y, 1);
+                    speed = 1;
+                    if (collis && home) {
+                        Anim();
+                    } else if (!home) {
+                        Anim();
+                    }
+                }else{
+                    if (aircar.Motion != null && aircar.Motion.isRunning()) return;
+                    aircar.speed = 1;
+                    aircar.motion();
                 }
                 break;
             case KeyEvent.VK_A:
-                if (anim != null && anim.isRunning()) return;
-                Collis(x, y, -1);
-                speed = -1;
-                if (collis&&home) {
-                    Anim();
-                }else if(!home){
-                    Anim();
+                if(!inTranport) {
+                    if (anim != null && anim.isRunning()) return;
+                    Collis(x, y, -1);
+                    speed = -1;
+                    if (collis && home) {
+                        Anim();
+                    } else if (!home) {
+                        Anim();
+                    }
+                }else{
+                    if (aircar.Motion != null && aircar.Motion.isRunning()) return;
+                    aircar.speed = -1;
+                    aircar.motion();
                 }
                 break;
             case KeyEvent.VK_SPACE:
@@ -83,16 +98,20 @@ public class Pers implements KeyListener {
                 }
                 break;
             case KeyEvent.VK_R:
-                if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
-                aircar.thrust(1);
+                if(inTranport) {
+                    if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
+                    aircar.thrust(1);
+                }
                 break;
             case KeyEvent.VK_F:
-                if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
-                aircar.thrust(-1);
+                if(inTranport) {
+                    if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
+                    aircar.thrust(-1);
+                }
                 break;
             case KeyEvent.VK_P:
                 doors();
-                DoorAircar();
+                inAircar();
                 //aircar.CarCollis();
                 break;
         }
@@ -132,6 +151,7 @@ public class Pers implements KeyListener {
         });
         anim.start();
         doors();
+        DoorAircar();
     }
     void go(){
         if(collis&&home) {
@@ -224,19 +244,29 @@ public class Pers implements KeyListener {
             if(speed>0 && e<0){collis=true;}
             else if(speed<0 && e>0){collis=true;}
         }
-        if(y+image.getHeight(null)<groundY){
+        if(y+image.getHeight(null)<groundY&&!inTranport){
             if (down!= null && down.isRunning()) return; Down();
         }
     }
     void DoorAircar(){
-        if((aircar.getX()>x&&aircar.getX()+aircar.getImg().getWidth(null)>x+image.getWidth(null))&&(aircar.getY()<y&&(aircar.getY()+aircar.getImg().getHeight(null)+50)>y+ image.getHeight(null))){
-            if(!home&&!inTranport){
-                aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
-                System.out.println("car open");
-                panel.repaint();
-                inTranport=true;
-            }
-            System.out.println("don't open");
+        if((aircar.getX()<x&&aircar.getX()+aircar.getImg().getWidth(null)>x+image.getWidth(null))&&(aircar.getY()<y&&(aircar.getY()+aircar.getImg().getHeight(null)+50)>y+ image.getHeight(null))){
+            Thingscollis = true;
+            MainGame.messageL.setText("Нажмите клавишу P чтобы войти!");
+        }
+    }
+
+    public boolean isInTranport() {
+        return inTranport;
+    }
+
+    void inAircar(){
+        if((!home&&!inTranport)&&Thingscollis){
+            aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
+            x = aircar.getX();
+            y = aircar.getY();
+            MainGame.messageL.setText("Нажмите клавишу P чтобы выйти!");
+            inTranport=true;
+            panel.repaint();
         }
     }
     void doors(){
