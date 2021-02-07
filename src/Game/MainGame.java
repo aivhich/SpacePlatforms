@@ -71,7 +71,7 @@ public class MainGame {
         };
         panel.setLayout(null);
 
-        messageL = new JLabel("Waring!");
+        messageL = new JLabel("Message!");
         thrustL = new JLabel("Thrust:");
         thrustL.setBounds(20,1,200,50);
         messageL.setBounds(frame.getWidth()/2-100,80,300,50);

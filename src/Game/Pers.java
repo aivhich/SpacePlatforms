@@ -20,7 +20,8 @@ public class Pers implements KeyListener {
     int speed;
     boolean home = true;
     boolean Open = false;
-    int Doorport = 0;    boolean inTranport = false;
+    int Doorport = 0;
+    boolean inTranport = false;
 
     boolean collis = true;
 
@@ -91,6 +92,7 @@ public class Pers implements KeyListener {
                 break;
             case KeyEvent.VK_P:
                 doors();
+                DoorAircar();
                 //aircar.CarCollis();
                 break;
         }
@@ -145,7 +147,6 @@ public class Pers implements KeyListener {
             MainGame.panel.repaint();
         }
         if(!home){
-
             if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();
             if (speed > 0) image = new ImageIcon("image/pers/humanl" + i + ".png").getImage();
             i++;
@@ -227,6 +228,17 @@ public class Pers implements KeyListener {
             if (down!= null && down.isRunning()) return; Down();
         }
     }
+    void DoorAircar(){
+        if((aircar.getX()>x&&aircar.getX()+aircar.getImg().getWidth(null)>x+image.getWidth(null))&&(aircar.getY()<y&&(aircar.getY()+aircar.getImg().getHeight(null)+50)>y+ image.getHeight(null))){
+            if(!home&&!inTranport){
+                aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
+                System.out.println("car open");
+                panel.repaint();
+                inTranport=true;
+            }
+            System.out.println("don't open");
+        }
+    }
     void doors(){
         if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null))){
             Open = true;
@@ -267,13 +279,6 @@ public class Pers implements KeyListener {
                 Doorport = 0;
             }
             panel.repaint();
-        /*if(!home){
-            musicpath = "music/space2.mp3";
-            MainGame.music.start();
-        }else{
-            ap.close();
-            MainGame.music.interrupt();
-        }*/
     }
     void refraiming(){
         station.setX(station.getX()+frame.getWidth()*(-speed));
