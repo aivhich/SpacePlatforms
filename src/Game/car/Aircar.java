@@ -94,11 +94,11 @@ public class Aircar extends Thread {
                     y=groundY-img.getHeight(null)-20;
                     for (int w = 0; w < 3; w++) engeens[w].setY(y+img.getHeight(null)-10);
                     if (thrust == 0) {
-                        yspeed =0;
                         for (int w = 0; w < 3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
                         if (aircar.Up != null && aircar.Up.isRunning()) return;
                         Up.stop();
                     }
+                    yspeed =0;
                     Down.stop();
                 }
                 panel.repaint();
@@ -114,11 +114,11 @@ public class Aircar extends Thread {
             public void actionPerformed(ActionEvent e) {
                 if (aircar.Down != null && aircar.Down.isRunning()) Down.stop();
                 if(thrust>2) {
-                    y -= (1 * thrust);
-                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() - ((1 * thrust)));
+                    y += (-1 * thrust);
+                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (-1 * thrust));
                 }else if((thrust<2)&&(y + img.getHeight(null) + 20 < groundY)){
-                    y -= (-1 * thrust);
-                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() - ((-1 * thrust)));
+                    y += (1 * thrust);
+                    for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1 * thrust));
                 }
                 if(thrust>=1){for(int w =0; w<3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen"+st+".png").getImage());}
                 if(thrust==0){
