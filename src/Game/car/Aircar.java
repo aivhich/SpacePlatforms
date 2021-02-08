@@ -93,13 +93,15 @@ public class Aircar extends Thread {
                     }
                 }else{
                     y=groundY-img.getHeight(null)-20;
+                    pers.setX(aircar.getX()+49);
+                    pers.setY(aircar.getY()+12);
                     for (int w = 0; w < 3; w++) engeens[w].setY(y+img.getHeight(null)-10);
                     if (thrust == 0) {
                         for (int w = 0; w < 3; w++) engeens[w].setImg(new ImageIcon("image/aircar/engeen" + 0 + ".png").getImage());
                         if (aircar.Up != null && aircar.Up.isRunning()) return;
                         Up.stop();
                     }
-                    yspeed =0;
+                    yspeed = 0;
                     Down.stop();
                 }
                 panel.repaint();

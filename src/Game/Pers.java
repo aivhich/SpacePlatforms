@@ -262,15 +262,17 @@ public class Pers implements KeyListener {
     void inAircar(){
         if((!home&&!inTranport)&&Thingscollis){
             aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
-            x = aircar.getX();
-            y = aircar.getY();
+            image = new ImageIcon("image/pers/humansit.png").getImage();
+            x = aircar.getX()+49;
+            y = aircar.getY()+12;
             MainGame.messageL.setText("");
             inTranport=true;
             panel.repaint();
         }else if(inTranport&&!home&&Thingscollis){
             aircar.setImg(new ImageIcon("image/aircar/aircar1.png").getImage());
-            x = aircar.getX();
-            y = aircar.getY();
+            image = new ImageIcon("image/pers/human0.png").getImage();
+            x = aircar.getX()+49;
+            y = aircar.getY()+12;
             if (down!= null && down.isRunning()) return;
             speed=0;
             aircar.yspeed=3;
@@ -302,7 +304,7 @@ public class Pers implements KeyListener {
             anim.stop();
             MainGame.sound.close();
         }
-            if (Open) {
+            if (Open&&!inTranport) {
                 if (Doorport < 0) {
                     x = MainGame.station.gateway[1].getX()+10;
                     home = false;
