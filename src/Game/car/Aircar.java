@@ -15,7 +15,7 @@ public class Aircar extends Thread {
     Image img = new ImageIcon("image/aircar/aircar1.png").getImage();
     int x, y, k;
     int imax;
-    int thrust=0;
+    public int thrust=0;
     public Timer Down, Motion, Up, TThrust;
     boolean switchFire, switchAnim=true;
     public Engeen[] engeens = new Engeen[3];
@@ -76,7 +76,7 @@ public class Aircar extends Thread {
         });
         TThrust.start();
     }
-    void down(){
+    public void down(){
         Down = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

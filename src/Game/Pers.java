@@ -251,8 +251,8 @@ public class Pers implements KeyListener {
     void DoorAircar(){
         if((aircar.getX()<x&&aircar.getX()+aircar.getImg().getWidth(null)>x+image.getWidth(null))&&(aircar.getY()<y&&(aircar.getY()+aircar.getImg().getHeight(null)+50)>y+ image.getHeight(null))){
             Thingscollis = true;
-            MainGame.messageL.setText("Нажмите клавишу P чтобы войти!");
-        }
+            MainGame.messageL.setText("Нажмите клавишу P чтобы войти/выйти!");
+        }else{Thingscollis=false; MainGame.messageL.setText("");}
     }
 
     public boolean isInTranport() {
@@ -264,9 +264,21 @@ public class Pers implements KeyListener {
             aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
             x = aircar.getX();
             y = aircar.getY();
-            MainGame.messageL.setText("Нажмите клавишу P чтобы выйти!");
+            MainGame.messageL.setText("");
             inTranport=true;
             panel.repaint();
+        }else if(inTranport&&!home&&Thingscollis){
+            aircar.setImg(new ImageIcon("image/aircar/aircar1.png").getImage());
+            x = aircar.getX();
+            y = aircar.getY();
+            if (down!= null && down.isRunning()) return;
+            speed=0;
+            aircar.yspeed=3;
+            aircar.thrust=0;
+            Down();
+            aircar.down();
+            MainGame.messageL.setText("");
+            inTranport=false;
         }
     }
     void doors(){
