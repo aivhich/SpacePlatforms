@@ -12,9 +12,8 @@ import java.awt.event.ActionListener;
 import static Game.MainGame.*;
 
 public class Aircar extends Thread {
-    Image img = new ImageIcon("image/aircar/aircar1.png").getImage();
+    Image img = new ImageIcon("image/aircar/aircarL1.png").getImage();
     int x, y, k;
-    int imax;
     public int thrust=0;
     public Timer Down, Motion, Up, TThrust;
     boolean switchFire, switchAnim=true;
@@ -116,16 +115,24 @@ public class Aircar extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 x += thrust * speed*3;
-                pers.setX(pers.getX()+thrust * speed*3);
+                pers.setX(aircar.getX()+49);
+                pers.setY(aircar.getY()+12);
                 for (int w = 0; w < 3; w++) {
                     engeens[w].setX(engeens[w].getX() + (thrust * speed*3));
                     if (aircar.Up != null && aircar.Up.isRunning()) {
                         if (speed > 0)
+                            pers.setImage(new ImageIcon("image/Pers/humansitL.png").getImage());
                             engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + "R.png").getImage());
-                        if (speed < 0)
+                        if(pers.isInTranport())img = new ImageIcon("image/aircar/aircarR0.png").getImage();
+                        if (speed < 0) {
+                            pers.setImage(new ImageIcon("image/Pers/humansitR.png").getImage());
                             engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + "L.png").getImage());
+                            if(pers.isInTranport())img = new ImageIcon("image/aircar/aircarL0.png").getImage();
+                        }
                     }
                 }
+                if(x>MainGame.frame.getWidth()) pers.refraiming();
+                else if(x<0) pers.refraiming();
                 panel.repaint();
                 Motion.stop();
             }
@@ -140,11 +147,17 @@ public class Aircar extends Thread {
                 if (aircar.Down != null && aircar.Down.isRunning()) Down.stop();
                 if(thrust>2) {
                     y += (-1 * thrust);
-                    if(pers.isInTranport()==true) pers.y+=(-1 * thrust);
+                    if(pers.isInTranport()==true){
+                        pers.setX(aircar.getX()+49);
+                        pers.setY(aircar.getY()+12);
+                    }
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (-1 * thrust));
                 }else if((thrust<2)&&(y + img.getHeight(null) + 20 < groundY)){
                     y += (1 * thrust);
-                    if(pers.isInTranport()==true) pers.y+=(1 * thrust);
+                    if(pers.isInTranport()==true) {
+                        pers.setX(aircar.getX()+49);
+                        pers.setY(aircar.getY()+12);
+                    }
                     for (int w = 0; w < 3; w++) engeens[w].setY(engeens[w].getY() + (1 * thrust));
                 }
                 if(thrust>=1){

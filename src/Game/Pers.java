@@ -260,16 +260,20 @@ public class Pers implements KeyListener {
     }
 
     void inAircar(){
+        if (anim != null && anim.isRunning()) return;
+        anim.stop();
         if((!home&&!inTranport)&&Thingscollis){
-            aircar.setImg(new ImageIcon("image/aircar/aircar0.png").getImage());
-            image = new ImageIcon("image/pers/humansit.png").getImage();
+            if(!pers.isInTranport()&&(aircar.speed==1||aircar.speed==0))aircar.setImg(new ImageIcon("image/aircar/aircarL0.png").getImage());
+            if(!pers.isInTranport()&&aircar.speed==-1)aircar.setImg(new ImageIcon("image/aircar/aircarR0.png").getImage());
+            image = new ImageIcon("image/pers/humansitR.png").getImage();
             x = aircar.getX()+49;
             y = aircar.getY()+12;
             MainGame.messageL.setText("");
             inTranport=true;
             panel.repaint();
         }else if(inTranport&&!home&&Thingscollis){
-            aircar.setImg(new ImageIcon("image/aircar/aircar1.png").getImage());
+            if(inTranport&&aircar.speed==1)aircar.setImg(new ImageIcon("image/aircar/aircarR1.png").getImage());
+            if(inTranport&&aircar.speed==-1)aircar.setImg(new ImageIcon("image/aircar/aircarL1.png").getImage());
             image = new ImageIcon("image/pers/human0.png").getImage();
             x = aircar.getX()+49;
             y = aircar.getY()+12;
@@ -281,6 +285,10 @@ public class Pers implements KeyListener {
             aircar.down();
             MainGame.messageL.setText("");
             inTranport=false;
+        }
+        if(inTranport==false){
+            if(aircar.speed==1)aircar.setImg(new ImageIcon("image/aircar/aircarR1.png").getImage());
+            if(aircar.speed==-1||aircar.speed==0)aircar.setImg(new ImageIcon("image/aircar/aircarL1.png").getImage());
         }
     }
     void doors(){
@@ -324,15 +332,24 @@ public class Pers implements KeyListener {
             }
             panel.repaint();
     }
-    void refraiming(){
+    public void refraiming(){
+        if(inTranport) speed = aircar.speed;
         station.setX(station.getX()+frame.getWidth()*(-speed));
         moduleOxg.setX(moduleOxg.getX()+frame.getWidth()*(-speed));
         rover.setX(rover.getX()+frame.getWidth()*(-speed));
         mountain.setX(mountain.getX()+frame.getWidth()*(-speed));
         greenhouse.setX(greenhouse.getX()+frame.getWidth()*(-speed));
+        if(!inTranport) {
+            if(speed==1)x=10;
+            if(speed==-1)x=frame.getWidth()- image.getWidth(null)-10;
+            aircar.setX(aircar.getX() + frame.getWidth() * (-speed));
+            for (int i = 0; i < 3; i++) aircar.engeens[i].setX(aircar.engeens[i].getX() + frame.getWidth() * (-speed));
+        }else{
+            if(aircar.speed==1)aircar.setX(10);
+            if(aircar.speed==-1)aircar.setX(frame.getWidth()- aircar.getImg().getWidth(null)-10);
+            for (int i = 0; i < 3; i++) aircar.engeens[i].setX(aircar.getX()+(85*i));
+        }
         for(int i=0; i<Station.gateway.length; i++) Station.gateway[i].setX(Station.gateway[i].getX()+frame.getWidth()*(-speed));
         for(int i=0; i<greenhouse.gateway.length; i++) greenhouse.gateway[i].setX(greenhouse.gateway[i].getX()+frame.getWidth()*(-speed));
-        if(speed==1)x=10;
-        if(speed==-1)x=frame.getWidth()- image.getWidth(null)-10;
     }
 }

@@ -18,7 +18,7 @@ import java.io.InputStream;
 
 
 public class MainGame {
-    static JFrame frame;
+    public static JFrame frame;
     public static JPanel panel;
     JLabel radiation, oxygen, live, traction;
 
