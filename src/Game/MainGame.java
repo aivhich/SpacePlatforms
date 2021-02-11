@@ -30,7 +30,7 @@ public class MainGame {
     public static int groundY;
 
     //music and sound effects
-//    public static AdvancedPlayer ap;
+//  public static AdvancedPlayer ap;
     public static String musicpath = "";
     //public static Music music = new Music();
     public static Sound sound = new Sound();
@@ -47,7 +47,6 @@ public class MainGame {
 
     //hero and objects
     public static Pers pers;
-    Player player[] = new Player[1];
     static Rover rover;
 
     public MainGame() {
@@ -58,9 +57,6 @@ public class MainGame {
 
         groundY = frame.getHeight()-111;
 
-        for(int i=0; i<1; i++){
-            player[i]=new Player(200, groundY-Player.getImg().getHeight(null));
-        }
 
         panel = new JPanel() {
             @Override
@@ -115,9 +111,7 @@ public class MainGame {
         for(int i=0; i<3; i++){
             g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
-        g.drawImage(player[0].getImg(), player[0].getX(), player[0].getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
-
     }
 
 //    static class Music extends Thread {
