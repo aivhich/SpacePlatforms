@@ -20,8 +20,6 @@ import java.io.InputStream;
 public class MainGame {
     public static JFrame frame;
     public static JPanel panel;
-    JLabel radiation, oxygen, live, traction;
-
     //images
     Image fon = new ImageIcon("image/spacemap1.png").getImage();
     Image fon1 = new ImageIcon("image/Mars/marsSurface.png").getImage();
@@ -40,10 +38,10 @@ public class MainGame {
     public static Station station;
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
+    public static Nps[] nps = new Nps[3];
     public static Greenhouse greenhouse;
     public static Aircar aircar;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
-
 
     //hero and objects
     public static Pers pers;
@@ -54,9 +52,7 @@ public class MainGame {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(size.width, size.height-20);
         frame.setLocation(0,0);
-
         groundY = frame.getHeight()-111;
-
 
         panel = new JPanel() {
             @Override
@@ -77,17 +73,17 @@ public class MainGame {
         panel.add(thrustL);
         panel.add(messageL);
         ///create objects
+
+        for(int i = 0; i<1; i++) nps[i] = new Nps("John",1, 100, 100);
+
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
         rover = new Rover();
         pers = new Pers();
+
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
-
-        radiation = new JLabel("Radiation level:");
-        radiation.setBounds(10, 10, 200,45);
-        radiation.setIcon(new ImageIcon("image/radiation.png"));
         frame.add(panel);
         frame.setVisible(true);
         panel.repaint();
@@ -112,6 +108,7 @@ public class MainGame {
             g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
+        for(int i =0; i<1; i++)g.drawImage(nps[i].getImage(), nps[i].getX(), nps[i].getY(), null);
     }
 
 //    static class Music extends Thread {

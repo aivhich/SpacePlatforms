@@ -135,7 +135,7 @@ public class Pers implements KeyListener {
         k = 7;
         MainGame.sound.playSound("sound/steps.wav");
         //MainGame.sound.setVolume(1);
-        anim = new Timer(100, new ActionListener() {
+        anim = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 go();
@@ -151,6 +151,7 @@ public class Pers implements KeyListener {
         });
         anim.start();
         doors();
+        for(int  i =0; i<1; i++) MainGame.nps[i].nameCollis();
         DoorAircar();
     }
     void go(){
@@ -292,10 +293,10 @@ public class Pers implements KeyListener {
         }
     }
     void doors(){
-        if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null))){
+        if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null)+40)){
             Open = true;
             Doorport = -1;
-        }else if((x>MainGame.station.gateway[1].getX()&&x+image.getWidth(null)<MainGame.station.gateway[1].getX()+MainGame.station.gateway[1].getImage().getWidth(null))){
+        }else if((x>MainGame.station.gateway[1].getX()&&x+image.getWidth(null)<MainGame.station.gateway[1].getX()+MainGame.station.gateway[1].getImage().getWidth(null)-40)){
             Open = true;
             Doorport = 1;
         }else{
