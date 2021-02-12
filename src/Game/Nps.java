@@ -1,5 +1,8 @@
 package Game;
 
+import Game.interfase.Collision;
+import Game.station.Station;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,13 +10,13 @@ import java.awt.event.ActionListener;
 
 import static Game.MainGame.*;
 
-public class Nps {
+public class Nps implements Collision {
     Image image = new ImageIcon("image/Pers/nps/1/human0.png").getImage();
     private int type, x, y;
     private String name;
     public static JLabel Lstr;
     Timer anim, Logic;
-    boolean home, collis;
+    boolean home, collis, busy;
     static int speed=0;
 
     Nps(String name, int type, int x , int y){
@@ -34,8 +37,8 @@ public class Nps {
         Logic = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(x>1000&&speed>0) speed = -speed;
-                if(x<100&&speed<0) speed = -speed;
+                if(!((x >= Station.getX()+40 && x+image.getWidth(null) <= (Station.getX() + Station.getImg().getWidth(null)-40))
+                        && (y >= Station.getY() && y <= Station.getY() + Station.getImg().getHeight(null)))) speed = -speed;
                 if (anim != null && anim.isRunning()) return;
                 Anim();
             }
@@ -46,7 +49,7 @@ public class Nps {
 
     void Anim() {
         k = 7;
-        MainGame.sound.playSound("sound/steps.wav");
+        //MainGame.sound.playSound("sound/steps.wav");
         //MainGame.sound.setVolume(1);
         anim = new Timer(50, new ActionListener() {
             @Override
@@ -64,8 +67,8 @@ public class Nps {
         for(int  i =0; i<1; i++) MainGame.nps[i].nameCollis();
     }
 
-    void go(){
-        if(collis&&home) {
+    void go() {
+        if (collis && home) {
             if (speed < 0) image = new ImageIcon("image/Pers/nps/1/human" + i + ".png").getImage();
             if (speed > 0) image = new ImageIcon("image/Pers/nps/1/humanl" + i + ".png").getImage();
             i++;
@@ -77,7 +80,7 @@ public class Nps {
             }
             MainGame.panel.repaint();
         }
-        if(!home){
+        if (!home) {
             if (speed < 0) image = new ImageIcon("image/Pers/nps/1/human" + i + ".png").getImage();
             if (speed > 0) image = new ImageIcon("image/Pers/nps/1/humanl" + i + ".png").getImage();
             i++;
@@ -89,20 +92,24 @@ public class Nps {
             }
             MainGame.panel.repaint();
         }
-        if(!collis&&home){
+        if (!collis && home) {
             anim.stop();
             MainGame.sound.close();
         }
-
+        if (collisionNps(x, y, image, computer.getImage(), 50, 50, computer.getX(), computer.getY())) {
+            anim.stop();
+            computer.getX();
+        }
     }
 
     void nameCollis(){
-        if((x-100<MainGame.pers.getX()&&x+100>MainGame.pers.getX())&&(y-100<MainGame.pers.getY()&&y+100>MainGame.pers.getY())){
+        if (collisionNps(x, y, image, pers.getImage(),100, 100, MainGame.pers.getX(), MainGame.pers.getY())){
             Lstr.setText(name);
             Lstr.setBounds(x, y-30,100,40);
         }else{
             Lstr.setText("");
         }
+        panel.repaint();
     }
 
     public static JLabel getLstr() {

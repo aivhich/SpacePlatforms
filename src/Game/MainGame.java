@@ -5,6 +5,7 @@ import Game.car.Aircar;
 import Game.station.ModuleOxg;
 import Game.station.Station;
 import Game.station.detail.Gateway;
+import Game.station.things.Computer;
 //import javazoom.jl.decoder.JavaLayerException;
 //import javazoom.jl.player.AudioDevice;
 //import javazoom.jl.player.JavaSoundAudioDevice;
@@ -41,6 +42,7 @@ public class MainGame {
     public static Nps[] nps = new Nps[3];
     public static Greenhouse greenhouse;
     public static Aircar aircar;
+    public static Computer computer;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
 
     //hero and objects
@@ -76,12 +78,14 @@ public class MainGame {
 
         for(int i = 0; i<1; i++) nps[i] = new Nps("John",1, 300, 100);
 
+        pers = new Pers();
         nps[0].logic(1);
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
+        computer = new Computer(400, 0);
         rover = new Rover();
-        pers = new Pers();
+
 
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
@@ -100,6 +104,8 @@ public class MainGame {
         g.drawImage(ModuleOxg.getImg(), ModuleOxg.getX(),ModuleOxg.getY(),null);
         g.drawImage(station.getImg(), station.getX(),station.getY(),null);
         g.drawImage(greenhouse.getImage(), greenhouse.getX(), greenhouse.getY(),null);
+        //things
+        g.drawImage(computer.getImage(), computer.getX(), computer.getY(),null);
         for(int i=0; i<2; i++){
             g.drawImage(station.gateway[i].getImage(), station.gateway[i].getX(), station.gateway[i].getY(),null);
             g.drawImage(greenhouse.gateway[i].getImage(), greenhouse.gateway[i].getX(), greenhouse.gateway[i].getY(),null);
@@ -110,6 +116,7 @@ public class MainGame {
         }
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
         for(int i =0; i<1; i++)g.drawImage(nps[i].getImage(), nps[i].getX(), nps[i].getY(), null);
+
     }
 
 //    static class Music extends Thread {
