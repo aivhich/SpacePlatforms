@@ -74,8 +74,9 @@ public class MainGame {
         panel.add(messageL);
         ///create objects
 
-        for(int i = 0; i<1; i++) nps[i] = new Nps("John",1, 100, 100);
+        for(int i = 0; i<1; i++) nps[i] = new Nps("John",1, 300, 100);
 
+        nps[0].logic(1);
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
