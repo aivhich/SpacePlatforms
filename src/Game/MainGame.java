@@ -4,7 +4,6 @@ import Game.Mars.Mountain;
 import Game.car.Aircar;
 import Game.station.ModuleOxg;
 import Game.station.Station;
-import Game.station.detail.Gateway;
 import Game.station.things.Computer;
 //import javazoom.jl.decoder.JavaLayerException;
 //import javazoom.jl.player.AudioDevice;
@@ -13,9 +12,6 @@ import Game.station.things.Computer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 
 public class MainGame {
@@ -39,11 +35,12 @@ public class MainGame {
     public static Station station;
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
-    public static Nps[] nps = new Nps[3];
+    public static Npc[] npc = new Npc[3];
     public static Greenhouse greenhouse;
     public static Aircar aircar;
     public static Computer computer;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
+    private Font dialog = new Font("TimesRoman", Font.BOLD, 10);
 
     //hero and objects
     public static Pers pers;
@@ -74,12 +71,22 @@ public class MainGame {
         messageL.setForeground(Color.YELLOW);
         panel.add(thrustL);
         panel.add(messageL);
+
         ///create objects
 
-        for(int i = 0; i<1; i++) nps[i] = new Nps(" Mark","Captain",1, 300, 100);
+        for(int i = 0; i<1; i++){
+            npc[i] = new Npc(" Mark","Captain",1, 300, 100);
+            npc[i].getDialog().setX(npc[i].getX()+npc[i].getImage().getWidth(null));
+            npc[i].getDialog().setY(npc[i].getY()-npc[i].getDialog().getImage().getHeight(null)+50);
+            npc[i].getDialog().getMsgText().setBounds(npc[i].getDialog().getX()+150,npc[i].getDialog().getY()+10,200,50);
+            npc[i].getDialog().getMsgText().setFont(dialog);
+            npc[i].getDialog().getMsgText().setForeground(Color.BLACK);
+            npc[i].getDialog().getMsgText().setText("");
+            MainGame.panel.add(npc[i].getDialog().getMsgText());
+        }
 
         pers = new Pers();
-        nps[0].run();
+        npc[0].run();
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
@@ -111,11 +118,16 @@ public class MainGame {
             g.drawImage(greenhouse.gateway[i].getImage(), greenhouse.gateway[i].getX(), greenhouse.gateway[i].getY(),null);
         }
         g.drawImage(aircar.getImg(), aircar.getX(), aircar.getY(), null);
+        for(int i =0; i<1; i++){
+            g.drawImage(npc[i].getImage(), npc[i].getX(), npc[i].getY(), null);
+            if(npc[i].getDialog().isVisible()) {
+                g.drawImage(npc[i].getDialog().getImage(), npc[i].getDialog().getX(), npc[i].getDialog().getY(), null);
+            }
+        }
         for(int i=0; i<3; i++){
             g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
-        for(int i =0; i<1; i++)g.drawImage(nps[i].getImage(), nps[i].getX(), nps[i].getY(), null);
 
     }
 

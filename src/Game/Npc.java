@@ -1,7 +1,7 @@
 package Game;
 
+import Game.dialogs.Dialog;
 import Game.interfase.Collision;
-import Game.station.Station;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,16 +10,18 @@ import java.awt.event.ActionListener;
 
 import static Game.MainGame.*;
 
-public class Nps extends Thread implements Collision{
+public class Npc extends Thread implements Collision{
     Image image = new ImageIcon("image/Pers/nps/1/humanl8.png").getImage();
     private int type, x, y;
     private String name, rank;
     public static JLabel Lstr;
     Timer anim, Logic;
+    public static Game.dialogs.Dialog dialog;
     boolean home, collis, busy;
     static int speed=2;
 
-    Nps(String name, String rank, int type, int x , int y){
+    Npc(String name, String rank, int type, int x , int y){
+        dialog = new Dialog();
         Lstr = new JLabel();
         this.name = name;
         this.rank = rank;
@@ -70,7 +72,7 @@ public class Nps extends Thread implements Collision{
             }
         });
         anim.start();
-        for(int  i =0; i<1; i++) MainGame.nps[i].nameCollis();
+        for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
     }
 
     void go() {
@@ -109,16 +111,26 @@ public class Nps extends Thread implements Collision{
     }
 
     void nameCollis(){
-        if (collisionNps(x, y, image, pers.getImage(),100, 100, MainGame.pers.getX(), MainGame.pers.getY())){
+        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())){
             Lstr.setText("<html>"+name+"<br>"+rank+"</html>");
             Lstr.setBounds(x, y-50,100,40);
             messageL.setText("Нажмите на E чтобы говорить!");
+            pers.discuss = true;
             panel.repaint();
         }else{
+            pers.discuss = false;
             Lstr.setText("");
             messageL.setText("");
         }
         panel.repaint();
+    }
+
+    public static Dialog getDialog() {
+        return dialog;
+    }
+
+    public static void setDialog(Dialog dialog) {
+        Npc.dialog = dialog;
     }
 
     public static JLabel getLstr() {

@@ -117,7 +117,10 @@ public class Pers implements KeyListener {
                 break;
             case KeyEvent.VK_E:
                 if(discuss){
-
+                    npc[0].getDialog().getMsgText().setBounds(npc[0].getX(),npc[0].getY()-npc[0].getDialog().getImage().getHeight(null),100,50);
+                    npc[0].getDialog().getMsgText().setText("Задание:");
+                    npc[0].getDialog().setVisible(true);
+                    panel.repaint();
                 }
                 break;
         }
@@ -157,7 +160,7 @@ public class Pers implements KeyListener {
         });
         anim.start();
         doors();
-        for(int  i =0; i<1; i++) MainGame.nps[i].nameCollis();
+        for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
         DoorAircar();
     }
     void go(){
