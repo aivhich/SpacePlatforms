@@ -22,6 +22,7 @@ public class Pers implements KeyListener {
     int speed;
     boolean home = true;
     boolean Open = false;
+    boolean discuss = false;
     int Doorport = 0;
     boolean inTranport = false;
 
@@ -113,6 +114,11 @@ public class Pers implements KeyListener {
                 doors();
                 inAircar();
                 //aircar.CarCollis();
+                break;
+            case KeyEvent.VK_E:
+                if(discuss){
+
+                }
                 break;
         }
         MainGame.panel.repaint();
@@ -253,7 +259,7 @@ public class Pers implements KeyListener {
         if((aircar.getX()<x&&aircar.getX()+aircar.getImg().getWidth(null)>x+image.getWidth(null))&&(aircar.getY()<y&&(aircar.getY()+aircar.getImg().getHeight(null)+50)>y+ image.getHeight(null))){
             Thingscollis = true;
             MainGame.messageL.setText("Нажмите клавишу P чтобы войти/выйти!");
-        }else{Thingscollis=false; MainGame.messageL.setText("");}
+        }else if(Thingscollis){MainGame.messageL.setText("");Thingscollis=false; }
     }
 
     public boolean isInTranport() {

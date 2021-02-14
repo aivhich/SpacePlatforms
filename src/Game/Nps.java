@@ -10,41 +10,47 @@ import java.awt.event.ActionListener;
 
 import static Game.MainGame.*;
 
-public class Nps implements Collision {
-    Image image = new ImageIcon("image/Pers/nps/1/human0.png").getImage();
+public class Nps extends Thread implements Collision{
+    Image image = new ImageIcon("image/Pers/nps/1/humanl8.png").getImage();
     private int type, x, y;
-    private String name;
+    private String name, rank;
     public static JLabel Lstr;
     Timer anim, Logic;
     boolean home, collis, busy;
-    static int speed=0;
+    static int speed=2;
 
-    Nps(String name, int type, int x , int y){
+    Nps(String name, String rank, int type, int x , int y){
         Lstr = new JLabel();
         this.name = name;
+        this.rank = rank;
         this.type = type;
         this.x = x;
         this.y = groundY - image.getHeight(null)-3;
         MainGame.panel.add(Lstr);
         Lstr.setForeground(Color.WHITE);
     }
-    int i = 0;
+    int i = 8;
     int k = 7;
 
-
-    void logic(int sp){
-        this.speed = sp;
-        Logic = new Timer(50, new ActionListener() {
+    void logic(){
+        Logic = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!((x >= Station.getX()+40 && x+image.getWidth(null) <= (Station.getX() + Station.getImg().getWidth(null)-40))
-                        && (y >= Station.getY() && y <= Station.getY() + Station.getImg().getHeight(null)))) speed = -speed;
-                if (anim != null && anim.isRunning()) return;
-                Anim();
+                if(i<=6) i=8;
+                speed = -speed;
+                y+=speed;
+                image = new ImageIcon("image/Pers/nps/1/humanl"+i+".png").getImage();
+                i-=1;
+                panel.repaint();
             }
         });
         Logic.start();
-        panel.repaint();
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        logic();
     }
 
     void Anim() {
@@ -104,10 +110,13 @@ public class Nps implements Collision {
 
     void nameCollis(){
         if (collisionNps(x, y, image, pers.getImage(),100, 100, MainGame.pers.getX(), MainGame.pers.getY())){
-            Lstr.setText(name);
-            Lstr.setBounds(x, y-30,100,40);
+            Lstr.setText("<html>"+name+"<br>"+rank+"</html>");
+            Lstr.setBounds(x, y-50,100,40);
+            messageL.setText("Нажмите на E чтобы говорить!");
+            panel.repaint();
         }else{
             Lstr.setText("");
+            messageL.setText("");
         }
         panel.repaint();
     }
@@ -152,11 +161,4 @@ public class Nps implements Collision {
         this.y = y;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

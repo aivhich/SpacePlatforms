@@ -34,7 +34,7 @@ public class MainGame {
     //public static Music music = new Music();
     public static Sound sound = new Sound();
 
-    public static JLabel thrustL, messageL;
+    volatile public static JLabel thrustL, messageL;
     //objects
     public static Station station;
     public static Mountain mountain;
@@ -76,10 +76,10 @@ public class MainGame {
         panel.add(messageL);
         ///create objects
 
-        for(int i = 0; i<1; i++) nps[i] = new Nps("John",1, 300, 100);
+        for(int i = 0; i<1; i++) nps[i] = new Nps(" Mark","Captain",1, 300, 100);
 
         pers = new Pers();
-        nps[0].logic(1);
+        nps[0].run();
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
