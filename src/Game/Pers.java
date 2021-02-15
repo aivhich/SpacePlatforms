@@ -117,9 +117,7 @@ public class Pers implements KeyListener {
                 break;
             case KeyEvent.VK_E:
                 if(discuss){
-                    npc[0].getDialog().getMsgText().setBounds(npc[0].getX(),npc[0].getY()-npc[0].getDialog().getImage().getHeight(null),100,50);
-                    npc[0].getDialog().getMsgText().setText("Задание:");
-                    npc[0].getDialog().setVisible(true);
+                    for(int i =0; i<1; i++) npc[i].discussing();
                     panel.repaint();
                 }
                 break;

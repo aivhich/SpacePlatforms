@@ -40,7 +40,7 @@ public class MainGame {
     public static Aircar aircar;
     public static Computer computer;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
-    private Font dialog = new Font("TimesRoman", Font.BOLD, 10);
+
 
     //hero and objects
     public static Pers pers;
@@ -74,16 +74,7 @@ public class MainGame {
 
         ///create objects
 
-        for(int i = 0; i<1; i++){
-            npc[i] = new Npc(" Mark","Captain",1, 300, 100);
-            npc[i].getDialog().setX(npc[i].getX()+npc[i].getImage().getWidth(null));
-            npc[i].getDialog().setY(npc[i].getY()-npc[i].getDialog().getImage().getHeight(null)+50);
-            npc[i].getDialog().getMsgText().setBounds(npc[i].getDialog().getX()+150,npc[i].getDialog().getY()+10,200,50);
-            npc[i].getDialog().getMsgText().setFont(dialog);
-            npc[i].getDialog().getMsgText().setForeground(Color.BLACK);
-            npc[i].getDialog().getMsgText().setText("");
-            MainGame.panel.add(npc[i].getDialog().getMsgText());
-        }
+        for(int i = 0; i<1; i++) npc[i] = new Npc(" Mark","Captain",1, 300, 100);
 
         pers = new Pers();
         npc[0].run();

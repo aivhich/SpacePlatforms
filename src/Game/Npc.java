@@ -75,6 +75,15 @@ public class Npc extends Thread implements Collision{
         for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
     }
 
+    void discussing(){
+        dialog.setX(x+image.getWidth(null));
+        dialog.setY(y);
+        dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
+        dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
+        dialog.setVisible(true);
+        panel.repaint();
+    }
+
     void go() {
         if (collis && home) {
             if (speed < 0) image = new ImageIcon("image/Pers/nps/1/human" + i + ".png").getImage();

@@ -13,10 +13,15 @@ public class Dialog {
     boolean visible;
     String text;
     Font Msg = new Font("TimesRoman", Font.BOLD, 15);
+    private Font dialog = new Font("TimesRoman", Font.BOLD, 10);
+
 
     public Dialog(){
         MsgText = new JLabel();
-
+        MsgText.setFont(dialog);
+        MsgText.setForeground(Color.BLACK);
+        MsgText.setText("");
+        MainGame.panel.add(MsgText);
     }
 
     public JLabel getMsgText() {
