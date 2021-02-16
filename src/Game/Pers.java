@@ -23,6 +23,8 @@ public class Pers implements KeyListener {
     boolean home = true;
     boolean Open = false;
     boolean discuss = false;
+    boolean answer = false;
+    boolean discussCollis = false;
     int Doorport = 0;
     boolean inTranport = false;
 
@@ -116,13 +118,17 @@ public class Pers implements KeyListener {
                 //aircar.CarCollis();
                 break;
             case KeyEvent.VK_E:
-                if(discuss){
+                if(discussCollis){
                     for(int i =0; i<1; i++) npc[i].discussing();
                     panel.repaint();
                 }
                 break;
         }
         MainGame.panel.repaint();
+    }
+
+    void discussing(){
+
     }
 
     @Override
@@ -340,6 +346,7 @@ public class Pers implements KeyListener {
             }
             panel.repaint();
     }
+
     public void refraiming(){
         if(inTranport) speed = aircar.speed;
         station.setX(station.getX()+frame.getWidth()*(-speed));

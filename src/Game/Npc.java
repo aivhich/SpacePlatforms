@@ -16,6 +16,7 @@ public class Npc extends Thread implements Collision{
     private String name, rank;
     public static JLabel Lstr;
     Timer anim, Logic;
+    int ValDialog = 0;
     public static Game.dialogs.Dialog dialog;
     boolean home, collis, busy;
     static int speed=2;
@@ -78,10 +79,11 @@ public class Npc extends Thread implements Collision{
     void discussing(){
         dialog.setX(x+image.getWidth(null));
         dialog.setY(y);
-        dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
+        if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
         dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
         dialog.setVisible(true);
         panel.repaint();
+        ValDialog++;
     }
 
     void go() {
@@ -124,10 +126,10 @@ public class Npc extends Thread implements Collision{
             Lstr.setText("<html>"+name+"<br>"+rank+"</html>");
             Lstr.setBounds(x, y-50,100,40);
             messageL.setText("Нажмите на E чтобы говорить!");
-            pers.discuss = true;
+            pers.discussCollis = true;
             panel.repaint();
         }else{
-            pers.discuss = false;
+            pers.discussCollis = false;
             Lstr.setText("");
             messageL.setText("");
         }
