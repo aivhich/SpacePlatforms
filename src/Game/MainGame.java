@@ -30,7 +30,7 @@ public class MainGame {
     //public static Music music = new Music();
     public static Sound sound = new Sound();
 
-    volatile public static JLabel thrustL, messageL;
+    volatile public static JLabel thrustL, messageL, tasksL;
     //objects
     public static Station station;
     public static Mountain mountain;
@@ -40,6 +40,7 @@ public class MainGame {
     public static Aircar aircar;
     public static Computer computer;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
+    private Font Finterface = new Font("TimesRoman", Font.BOLD, 18);
 
 
     //hero and objects
@@ -62,15 +63,23 @@ public class MainGame {
         };
         panel.setLayout(null);
 
+        ///надписи
         messageL = new JLabel("");
-        thrustL = new JLabel("Thrust:");
+        thrustL = new JLabel("Тяга:");
+        tasksL = new JLabel("Задания: нет");
+
         thrustL.setBounds(20,1,200,50);
+        tasksL.setBounds(20, 50, 400, 80);
         messageL.setBounds(frame.getWidth()/2-400,80,800,50);
         messageL.setFont(Msg);
+        tasksL.setFont(Finterface);
+        thrustL.setFont(Finterface);
         thrustL.setForeground(Color.white);
-        messageL.setForeground(Color.YELLOW);
+        tasksL.setForeground(Color.white);
+        messageL.setForeground(Color.ORANGE);
         panel.add(thrustL);
         panel.add(messageL);
+        panel.add(tasksL);
 
         ///create objects
 
