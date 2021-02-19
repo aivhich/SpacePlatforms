@@ -64,7 +64,7 @@ public class Aircar extends Thread {
                 if((thrust<10&&k==1)||(thrust>0&&k==-1)) {
                     thrust += k;
                 }
-                MainGame.thrustL.setText("Thrust: "+thrust);
+                MainGame.thrustL.setText("Тяга: "+thrust);
                 TThrust.stop();
                 if (aircar.Up != null && aircar.Up.isRunning()) return;
                 up();

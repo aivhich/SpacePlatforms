@@ -353,6 +353,8 @@ public class Pers implements KeyListener {
         rover.setX(rover.getX()+frame.getWidth()*(-speed));
         mountain.setX(mountain.getX()+frame.getWidth()*(-speed));
         greenhouse.setX(greenhouse.getX()+frame.getWidth()*(-speed));
+        for(int i =0; i<1; i++) npc[i].setX(npc[i].getX()+frame.getWidth()*(-speed));
+        computer.setX(computer.getX()+frame.getWidth()*(-speed));
         if(!inTranport) {
             if(speed==1)x=10;
             if(speed==-1)x=frame.getWidth()- image.getWidth(null)-10;

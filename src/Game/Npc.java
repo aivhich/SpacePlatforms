@@ -131,6 +131,8 @@ public class Npc extends Thread implements Collision{
             panel.repaint();
         }else{
             pers.discussCollis = false;
+            messageL.setText("");
+            dialog.setVisible(false);
             Lstr.setText("");
             messageL.setText("");
         }
