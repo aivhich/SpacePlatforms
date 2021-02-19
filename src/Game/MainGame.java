@@ -69,8 +69,8 @@ public class MainGame {
         tasksL = new JLabel("Задания: нет");
 
         thrustL.setBounds(20,1,200,50);
-        tasksL.setBounds(20, 50, 400, 80);
-        messageL.setBounds(frame.getWidth()/2-400,80,800,50);
+        tasksL.setBounds(20, 50, 450, 200);
+        messageL.setBounds(frame.getWidth()/2-200,80,800,50);
         messageL.setFont(Msg);
         tasksL.setFont(Finterface);
         thrustL.setFont(Finterface);

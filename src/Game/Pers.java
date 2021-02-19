@@ -272,7 +272,6 @@ public class Pers implements KeyListener {
     public boolean isInTranport() {
         return inTranport;
     }
-
     void inAircar(){
         if (anim != null && anim.isRunning()) return;
         anim.stop();
@@ -305,6 +304,7 @@ public class Pers implements KeyListener {
             if(aircar.speed==-1||aircar.speed==0)aircar.setImg(new ImageIcon("image/aircar/aircarL1.png").getImage());
         }
     }
+
     void doors(){
         if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null)+40)){
             Open = true;
@@ -318,7 +318,6 @@ public class Pers implements KeyListener {
         }
         gateway();
     }
-
     void gateway() {
         if (anim != null && anim.isRunning()){
             return;

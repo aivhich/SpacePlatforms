@@ -80,6 +80,7 @@ public class Npc extends Thread implements Collision{
         dialog.setX(x+image.getWidth(null));
         dialog.setY(y);
         if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
+        if(ValDialog==0) tasksL.setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
         dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
         dialog.setVisible(true);
         panel.repaint();
