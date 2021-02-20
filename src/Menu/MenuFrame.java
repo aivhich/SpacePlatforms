@@ -12,9 +12,14 @@ import java.awt.event.ActionListener;
 public class MenuFrame {
     JFrame frame = new JFrame();
     JPanel panel;
+    JButton startB = new JButton("Начать игру");
+    JButton cancelB = new JButton("Выйти");
+
     Timer orbitT;
-    Mars mars = new Mars();
-    Earth earth = new Earth();
+
+    //Mars mars = new Mars();
+    //Earth earth = new Earth();
+
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
     int Xsun = size.width/2-100, Ysun=size.height/2-100;
     Image fon = new ImageIcon("image/spacemap2.png").getImage();
@@ -29,36 +34,49 @@ public class MenuFrame {
                 super.paintComponent(g);
                 g.drawImage(fon, 0, 0,null);
                 g.drawImage(sun, Xsun, Ysun,null);
-                if(mars.getOrbitAz()==1) {
-                    g.drawImage(earth.getImage(), earth.getX(), earth.getY(), null);
-                    g.drawImage(mars.getImage(), mars.getX(), mars.getY(), null);
-                }else{
-                    g.drawImage(mars.getImage(), mars.getX(), mars.getY(), null);
-                    g.drawImage(earth.getImage(), earth.getX(), earth.getY(), null);
-                }
             }
         };
         panel.setLayout(null);
+        startB.setBounds(size.width/2-125, size.height/2+125, 250, 40);
+        cancelB.setBounds(size.width/2-125, size.height/2+190, 250, 40);
+        panel.add(startB);
+        panel.add(cancelB);
         frame.add(panel);
         frame.setVisible(true);
-        AnimOrbit();
+        ///AnimOrbit();
+        ActionBut();
     }
-    void AnimOrbit(){
+    /*void AnimOrbit(){
         orbitT = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(mars.getOrbitAz()==1) {
-                    if((mars.getX()> MainGame.size.width/2)&&mars.getOrbitAz()==1)mars.setOrbitAz(-mars.getOrbitAz());
-                    mars.setX(mars.getX() + 2);
+                    if((mars.getX()> MainGame.size.width/2+mars.getImage().getWidth(null)/2)&&mars.getOrbitAz()==1)mars.setOrbitAz(mars.getOrbitAz()+1);
+                    mars.setX(mars.getX() + 4);
                     mars.setY(mars.getY() + 1);
-                }else if(mars.getOrbitAz()==-1) {
-                    if((mars.getX()< MainGame.size.width/2)&&mars.getOrbitAz()==-1)mars.setOrbitAz(-mars.getOrbitAz());
-                    mars.setX(mars.getX()-2);
+                }else if(mars.getOrbitAz()==2) {
+                    mars.setX(mars.getX()+4);
                     mars.setY(mars.getY()-1);
                 }
                 panel.repaint();
             }
         });
         orbitT.start();
+    }*/
+
+    void ActionBut(){
+        startB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MainGame();
+                frame.dispose();
+            }
+        });
+        cancelB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
     }
 }
