@@ -12,6 +12,7 @@ import Game.station.things.Computer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 
 public class MainGame {
@@ -32,6 +33,7 @@ public class MainGame {
 
     volatile public static JLabel thrustL, messageL, tasksL;
     //objects
+    public static Save Savedata = new Save();
     public static Station station;
     public static Mountain mountain;
     public static ModuleOxg moduleOxg;
@@ -99,6 +101,7 @@ public class MainGame {
         frame.add(panel);
         frame.setVisible(true);
         panel.repaint();
+        ReOpen();
     }
 
     void drowing(Graphics g){
@@ -129,6 +132,19 @@ public class MainGame {
         }
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
 
+    }
+
+    void ReOpen(){
+        try {
+            Savedata.read();
+            pers.setX(Integer.parseInt(String.valueOf(Savedata.list.get(0))));
+            pers.setY(Integer.parseInt(String.valueOf(Savedata.list.get(1))));
+            npc[0].setX(Integer.parseInt(String.valueOf(Savedata.list.get(2))));
+            npc[0].setY(Integer.parseInt(String.valueOf(Savedata.list.get(3))));
+
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
 //    static class Music extends Thread {

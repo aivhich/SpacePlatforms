@@ -42,7 +42,7 @@ public class Pers implements KeyListener {
         this.x = x;
     }
 
-    public int getY() {
+    public static int getY() {
         return y;
     }
 
@@ -123,13 +123,13 @@ public class Pers implements KeyListener {
                     panel.repaint();
                 }
                 break;
+            case KeyEvent.VK_ESCAPE:
+                new TwoMenu();
+                break;
         }
         MainGame.panel.repaint();
     }
 
-    void discussing(){
-
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -306,10 +306,10 @@ public class Pers implements KeyListener {
     }
 
     void doors(){
-        if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null)+40)){
+        if((x>MainGame.station.gateway[0].getX()&&x+image.getWidth(null)<MainGame.station.gateway[0].getX()+MainGame.station.gateway[0].getImage().getWidth(null)+200)){
             Open = true;
             Doorport = -1;
-        }else if((x>MainGame.station.gateway[1].getX()&&x+image.getWidth(null)<MainGame.station.gateway[1].getX()+MainGame.station.gateway[1].getImage().getWidth(null)-40)){
+        }else if((x>MainGame.station.gateway[1].getX()-200&&x+image.getWidth(null)<MainGame.station.gateway[1].getX()+MainGame.station.gateway[1].getImage().getWidth(null))){
             Open = true;
             Doorport = 1;
         }else{
