@@ -20,6 +20,7 @@ public class Pers implements KeyListener {
     public static int y = groundY - image.getHeight(null)-3;
     Timer anim, jump, down;
     int speed;
+    int room;
     boolean home = true;
     boolean Open = false;
     boolean discuss = false;
@@ -346,8 +347,17 @@ public class Pers implements KeyListener {
             panel.repaint();
     }
 
+    public boolean isHome() {
+        return home;
+    }
+
+    public void setHome(boolean home) {
+        this.home = home;
+    }
+
     public void refraiming(){
         if(inTranport) speed = aircar.speed;
+        room+=-speed;
         station.setX(station.getX()+frame.getWidth()*(-speed));
         moduleOxg.setX(moduleOxg.getX()+frame.getWidth()*(-speed));
         rover.setX(rover.getX()+frame.getWidth()*(-speed));

@@ -139,8 +139,7 @@ public class MainGame {
             Savedata.read();
             pers.setX(Integer.parseInt(String.valueOf(Savedata.list.get(0))));
             pers.setY(Integer.parseInt(String.valueOf(Savedata.list.get(1))));
-            npc[0].setX(Integer.parseInt(String.valueOf(Savedata.list.get(2))));
-            npc[0].setY(Integer.parseInt(String.valueOf(Savedata.list.get(3))));
+            pers.setHome(Boolean.parseBoolean(String.valueOf(Savedata.list.get(2))));
 
         } catch (IOException exception) {
             exception.printStackTrace();

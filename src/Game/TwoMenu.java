@@ -57,8 +57,8 @@ public class TwoMenu {
             public void actionPerformed(ActionEvent e) {
                 MainGame.Savedata.list.add(MainGame.pers.getX());
                 MainGame.Savedata.list.add(MainGame.pers.getY());
-                MainGame.Savedata.list.add(MainGame.npc[0].getX());
-                MainGame.Savedata.list.add(MainGame.npc[0].getY());
+                MainGame.Savedata.list.add(MainGame.pers.home);
+                MainGame.Savedata.list.add(MainGame.pers.room);
                 System.out.print(MainGame.Savedata.list);
                 try {
                     MainGame.Savedata.save();

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 public class Save {
     private static final String PATH = "files/fileworld.txt";
     ArrayList list = new ArrayList();
+    File Filesave = new File(PATH);
+
     public void save() throws IOException{
         FileWriter writer = new FileWriter(PATH);
         for(int i = 0; i<list.size(); i++){
@@ -19,6 +21,19 @@ public class Save {
         String c;
         while ((c = reader.readLine()) != null) {
             list.add(c);
+        }
+        deleted();
+    }
+    void deleted(){
+        try {
+            PrintWriter writer = new PrintWriter(PATH);
+            writer.print("");
+            writer.flush();
+            writer.close();
+
+        }catch (Exception e)
+        {
+
         }
     }
 }
