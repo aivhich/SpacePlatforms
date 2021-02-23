@@ -55,16 +55,16 @@ public class TwoMenu {
         cancelB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGame.Savedata.list.add(MainGame.pers.getX());
-                MainGame.Savedata.list.add(MainGame.pers.getY());
-                MainGame.Savedata.list.add(MainGame.pers.home);
-                MainGame.Savedata.list.add(MainGame.pers.room);
-                System.out.print(MainGame.Savedata.list);
-                try {
-                    MainGame.Savedata.save();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
+//                MainGame.Savedata.list.add(MainGame.pers.getX());
+//                MainGame.Savedata.list.add(MainGame.pers.getY());
+//                MainGame.Savedata.list.add(MainGame.pers.home);
+//                MainGame.Savedata.list.add(MainGame.pers.room);
+//                System.out.print(MainGame.Savedata.list);
+//                try {
+//                    MainGame.Savedata.save();
+//                } catch (IOException exception) {
+//                    exception.printStackTrace();
+//                }
                 System.exit(0);
             }
         });

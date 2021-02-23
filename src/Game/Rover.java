@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Rover {
     Image image = new ImageIcon("image/rover.png").getImage();
-    int x=1200, y=MainGame.groundY-image.getHeight(null);
+    int x=10200, y=MainGame.groundY-image.getHeight(null);
     Rover(){
 
     }

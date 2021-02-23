@@ -8,6 +8,7 @@ import static Game.MainGame.groundY;
 public class Computer {
     Image image = new ImageIcon("image/computer.png").getImage();
     int x, y;
+    boolean visible;
     boolean netConnection;
 
     String []task;
@@ -15,6 +16,14 @@ public class Computer {
     public Computer(int x, int y) {
         this.x = x;
         this.y = groundY - image.getHeight(null)-3;
+    }
+
+    public void Visible(){
+        if(!visible){
+            image = new ImageIcon("null.png").getImage();
+        }else{
+            image = new ImageIcon("image/computer.png").getImage();
+        }
     }
 
     public Image getImage() {
@@ -43,6 +52,14 @@ public class Computer {
 
     public String[] getTask() {
         return task;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public void setTask(String[] task) {

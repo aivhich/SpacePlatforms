@@ -75,6 +75,7 @@ public class Pers implements KeyListener {
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = 1;
+
                     aircar.motion();
                 }
                 break;
@@ -333,12 +334,24 @@ public class Pers implements KeyListener {
                     station.setImg(new ImageIcon("image/station2.png").getImage());
                     station.gateway[0].setImage(new ImageIcon("null.png").getImage());
                     moduleOxg.setImg(new ImageIcon("image/moduleOxygen2.png").getImage());
+                    for(int i =0; i<1; i++){
+                        npc[i].setVisible(false);
+                        computer.setVisible(false);
+                        npc[i].Visible();
+                        computer.Visible();
+                    }
                 } else if (Doorport > 0) {
                     x = 792;
                     home = true;
                     station.setImg(new ImageIcon("image/station1.png").getImage());
                     station.gateway[0].setImage(new ImageIcon("image/station/gatewayl.png").getImage());
                     moduleOxg.setImg(new ImageIcon("image/moduleOxygen.png").getImage());
+                    for(int i =0; i<1; i++){
+                        npc[i].setVisible(true);
+                        computer.setVisible(true);
+                        npc[i].Visible();
+                        computer.Visible();
+                    }
                 }
                 MainGame.sound.playSound("sound/door.wav");
                 Open = false;
@@ -346,6 +359,7 @@ public class Pers implements KeyListener {
             }
             panel.repaint();
     }
+
 
     public boolean isHome() {
         return home;

@@ -101,7 +101,7 @@ public class MainGame {
         frame.add(panel);
         frame.setVisible(true);
         panel.repaint();
-        ReOpen();
+        //ReOpen();
     }
 
     void drowing(Graphics g){
@@ -114,6 +114,7 @@ public class MainGame {
         g.drawImage(ModuleOxg.getImg(), ModuleOxg.getX(),ModuleOxg.getY(),null);
         g.drawImage(station.getImg(), station.getX(),station.getY(),null);
         g.drawImage(greenhouse.getImage(), greenhouse.getX(), greenhouse.getY(),null);
+        g.drawImage(rover.getImage(), rover.getX(), rover.getY(),null);
         //things
         g.drawImage(computer.getImage(), computer.getX(), computer.getY(),null);
         for(int i=0; i<2; i++){

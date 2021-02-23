@@ -16,6 +16,8 @@ public class Npc extends Thread implements Collision{
     private String name, rank;
     public static JLabel Lstr;
     Timer anim, Logic;
+
+    private boolean visible=true;
     int ValDialog = 0;
     public static Game.dialogs.Dialog dialog;
     boolean home, collis, busy;
@@ -44,6 +46,7 @@ public class Npc extends Thread implements Collision{
                 y+=speed;
                 image = new ImageIcon("image/Pers/nps/1/humanl"+i+".png").getImage();
                 i-=1;
+                Visible();
                 panel.repaint();
             }
         });
@@ -80,7 +83,7 @@ public class Npc extends Thread implements Collision{
         dialog.setX(x+image.getWidth(null));
         dialog.setY(y);
         if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
-        if(ValDialog==0) tasksL.setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
+        if(ValDialog==0) tasksL.setText("<html>Задание:<br>Найдите ровер и почините его.</html>");
         dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
         dialog.setVisible(true);
         panel.repaint();
@@ -187,4 +190,19 @@ public class Npc extends Thread implements Collision{
         this.y = y;
     }
 
+    void Visible(){
+        if(!visible){
+            image = new ImageIcon("null.png").getImage();
+        }else{
+            image = new ImageIcon("image/Pers/nps/1/humanl8.png").getImage();
+        }
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
 }
