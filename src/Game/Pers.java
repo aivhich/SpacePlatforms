@@ -331,9 +331,7 @@ public class Pers implements KeyListener {
                 if (Doorport < 0) {
                     x = MainGame.station.gateway[1].getX()+10;
                     home = false;
-                    station.setImg(new ImageIcon("image/station2.png").getImage());
-                    station.gateway[0].setImage(new ImageIcon("null.png").getImage());
-                    moduleOxg.setImg(new ImageIcon("image/moduleOxygen2.png").getImage());
+                    reHome();
                     for(int i =0; i<1; i++){
                         npc[i].setVisible(false);
                         computer.setVisible(false);
@@ -343,9 +341,7 @@ public class Pers implements KeyListener {
                 } else if (Doorport > 0) {
                     x = 792;
                     home = true;
-                    station.setImg(new ImageIcon("image/station1.png").getImage());
-                    station.gateway[0].setImage(new ImageIcon("image/station/gatewayl.png").getImage());
-                    moduleOxg.setImg(new ImageIcon("image/moduleOxygen.png").getImage());
+                    reHome();
                     for(int i =0; i<1; i++){
                         npc[i].setVisible(true);
                         computer.setVisible(true);
@@ -359,7 +355,17 @@ public class Pers implements KeyListener {
             }
             panel.repaint();
     }
-
+    void reHome(){
+        if(home) {
+            station.setImg(new ImageIcon("image/station1.png").getImage());
+            station.gateway[0].setImage(new ImageIcon("image/station/gatewayl.png").getImage());
+            moduleOxg.setImg(new ImageIcon("image/moduleOxygen.png").getImage());
+        }else{
+            station.setImg(new ImageIcon("image/station2.png").getImage());
+            station.gateway[0].setImage(new ImageIcon("image/null.png").getImage());
+            moduleOxg.setImg(new ImageIcon("image/moduleOxygen2.png").getImage());
+        }
+    }
 
     public boolean isHome() {
         return home;
@@ -391,5 +397,20 @@ public class Pers implements KeyListener {
         }
         for(int i=0; i<Station.gateway.length; i++) Station.gateway[i].setX(Station.gateway[i].getX()+frame.getWidth()*(-speed));
         for(int i=0; i<greenhouse.gateway.length; i++) greenhouse.gateway[i].setX(greenhouse.gateway[i].getX()+frame.getWidth()*(-speed));
+    }
+
+    void saves(Boolean read){
+        if(read){
+            x = Integer.parseInt(String.valueOf(Savedata.readlist.get(0)));
+            y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
+            home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
+            inTranport = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(3)));
+            reHome();
+        }else{
+            Savedata.list.add(x);
+            Savedata.list.add(y);
+            Savedata.list.add(home);
+            Savedata.list.add(inTranport);
+        }
     }
 }

@@ -101,8 +101,10 @@ public class MainGame {
         frame.add(panel);
         frame.setVisible(true);
         panel.repaint();
-        //ReOpen();
     }
+
+
+
 
     void drowing(Graphics g){
         //fons
@@ -135,17 +137,6 @@ public class MainGame {
 
     }
 
-    void ReOpen(){
-        try {
-            Savedata.read();
-            pers.setX(Integer.parseInt(String.valueOf(Savedata.list.get(0))));
-            pers.setY(Integer.parseInt(String.valueOf(Savedata.list.get(1))));
-            pers.setHome(Boolean.parseBoolean(String.valueOf(Savedata.list.get(2))));
-
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
 
 //    static class Music extends Thread {
 //        @Override
