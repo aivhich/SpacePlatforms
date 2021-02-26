@@ -166,10 +166,16 @@ public class Pers implements KeyListener {
             }
         });
         anim.start();
-        doors();
-        for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
-        DoorAircar();
+        Allcolision();
     }
+
+    void Allcolision(){
+        for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
+        rover.collis();
+        DoorAircar();
+        doors();
+    }
+
     void go(){
         if(collis&&home) {
             if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();

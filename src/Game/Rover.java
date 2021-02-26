@@ -1,13 +1,26 @@
 package Game;
 
+import Game.interfase.Collision;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Rover {
+import static Game.MainGame.*;
+
+public class Rover implements Collision {
     Image image = new ImageIcon("image/rover.png").getImage();
     int x=10200, y=MainGame.groundY-image.getHeight(null);
     Rover(){
 
+    }
+
+    void collis(){
+        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())&& !pers.Thingscollis){
+            messageL.setText("Нажмите H чтобы проверить системы ровера!");
+        }else{
+            messageL.setText("");
+        }
+        panel.repaint();
     }
 
     public Image getImage() {
