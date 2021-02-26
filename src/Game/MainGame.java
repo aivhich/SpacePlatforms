@@ -41,6 +41,7 @@ public class MainGame {
     public static Greenhouse greenhouse;
     public static Aircar aircar;
     public static Computer computer;
+    public static Alien alien;
     private Font Msg = new Font("TimesRoman", Font.BOLD, 30);
     private Font Finterface = new Font("TimesRoman", Font.BOLD, 18);
 
@@ -88,13 +89,14 @@ public class MainGame {
         for(int i = 0; i<1; i++) npc[i] = new Npc(" Mark","Captain",1, 300, 100);
 
         pers = new Pers();
+
         npc[0].run();
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
         mountain = new Mountain(10, groundY-478);
         computer = new Computer(400, 0);
         rover = new Rover();
-
+        alien = new Alien(10100, 100);
 
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
@@ -117,6 +119,8 @@ public class MainGame {
         g.drawImage(station.getImg(), station.getX(),station.getY(),null);
         g.drawImage(greenhouse.getImage(), greenhouse.getX(), greenhouse.getY(),null);
         g.drawImage(rover.getImage(), rover.getX(), rover.getY(),null);
+        g.drawImage(alien.getImage(), alien.getX(), alien.getY(), null);
+
         //things
         g.drawImage(computer.getImage(), computer.getX(), computer.getY(),null);
         for(int i=0; i<2; i++){

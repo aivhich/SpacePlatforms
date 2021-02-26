@@ -23,6 +23,7 @@ public class Pers implements KeyListener {
     int room;
     boolean home = true;
     boolean Open = false;
+    boolean reRead = false;
     boolean discuss = false;
     boolean answer = false;
     boolean discussCollis = false;
@@ -360,10 +361,14 @@ public class Pers implements KeyListener {
             station.setImg(new ImageIcon("image/station1.png").getImage());
             station.gateway[0].setImage(new ImageIcon("image/station/gatewayl.png").getImage());
             moduleOxg.setImg(new ImageIcon("image/moduleOxygen.png").getImage());
+            computer.Visible();
+            for(int i = 0; i<1; i++)npc[i].setVisible(true);npc[i].Visible();
         }else{
             station.setImg(new ImageIcon("image/station2.png").getImage());
             station.gateway[0].setImage(new ImageIcon("image/null.png").getImage());
             moduleOxg.setImg(new ImageIcon("image/moduleOxygen2.png").getImage());
+            computer.Visible();
+            for(int i = 0; i<1; i++)npc[i].setVisible(false);npc[i].Visible();
         }
     }
 
@@ -376,8 +381,13 @@ public class Pers implements KeyListener {
     }
 
     public void refraiming(){
-        if(inTranport) speed = aircar.speed;
-        room+=-speed;
+        if(!reRead) {
+            if (inTranport) speed = aircar.speed;
+            room += -speed;
+        }else{
+            speed=-room;
+            reRead=false;
+        }
         station.setX(station.getX()+frame.getWidth()*(-speed));
         moduleOxg.setX(moduleOxg.getX()+frame.getWidth()*(-speed));
         rover.setX(rover.getX()+frame.getWidth()*(-speed));
@@ -385,6 +395,7 @@ public class Pers implements KeyListener {
         greenhouse.setX(greenhouse.getX()+frame.getWidth()*(-speed));
         for(int i =0; i<1; i++) npc[i].setX(npc[i].getX()+frame.getWidth()*(-speed));
         computer.setX(computer.getX()+frame.getWidth()*(-speed));
+        alien.setX(alien.getX()+frame.getWidth()*(-speed));
         if(!inTranport) {
             if(speed==1)x=10;
             if(speed==-1)x=frame.getWidth()- image.getWidth(null)-10;
@@ -405,12 +416,16 @@ public class Pers implements KeyListener {
             y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
             home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
             inTranport = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(3)));
+            room = Integer.parseInt(String.valueOf(Savedata.readlist.get(4)));
+            reRead=true;
+            refraiming();
             reHome();
         }else{
             Savedata.list.add(x);
             Savedata.list.add(y);
             Savedata.list.add(home);
             Savedata.list.add(inTranport);
+            Savedata.list.add(room);
         }
     }
 }
