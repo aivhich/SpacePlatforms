@@ -19,7 +19,7 @@ public class MainGame {
     public static JFrame frame;
     public static JPanel panel;
     //images
-    Image fon = new ImageIcon("image/spacemap1.png").getImage();
+    Image fon = new ImageIcon("image/Mars/sky.png").getImage();
     Image fon1 = new ImageIcon("image/Mars/marsSurface.png").getImage();
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
