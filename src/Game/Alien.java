@@ -1,5 +1,7 @@
 package Game;
 
+import Game.blaster.Blaster;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +15,7 @@ public class Alien {
     private int x, y;
     Timer anim, logic;
     int speed;
+    Blaster blaster = new Blaster();
 
     Alien(int x, int y) {
         this.x = x;
@@ -27,6 +30,17 @@ public class Alien {
                 if(MainGame.pers.room==-6&&x>500&&!MainGame.pers.inTranport){
                     if(anim!=null && anim.isRunning())return;
                     speed=-1;
+                    if(MainGame.pers.getX()>x){
+                        blaster.blasterShot(1);
+                        image = new ImageIcon("image/alien/alienSh.png").getImage();
+                        blaster.setX(x);
+                        blaster.setY(y+50);
+                    }else{
+                        blaster.blasterShot(-1);
+                        image = new ImageIcon("image/alien/alienShL.png").getImage();
+                        blaster.setX(x+ image.getWidth(null));
+                        blaster.setY(y+50);
+                    }
                     Anim();
                 }
             }

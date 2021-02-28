@@ -137,6 +137,8 @@ public class MainGame {
         for(int i=0; i<3; i++){
             g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
+        g.drawImage(alien.blaster.getImage(), alien.blaster.getX(), alien.blaster.getY(), null);
+        g.drawImage(alien.blaster.getShot().getImage(), alien.blaster.getShot().getX(), alien.blaster.getShot().getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
 
     }
