@@ -10,4 +10,11 @@ public interface Collision {
              return true;
          else return false;
     }
+    default boolean collisionShot(int x, int y,  int persX, int persY, Image imgshot, Image img1, int width){
+        if(((persX+img1.getWidth(null)+width>=x+imgshot.getWidth(null))&&(persX-width<x))&&(persY<y&&persY+img1.getHeight(null)>y)){
+            System.out.println(img1.getWidth(null));
+            System.out.println(img1.getHeight(null));
+        return true;
+        }else{return false;}
+    }
 }

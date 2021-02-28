@@ -27,21 +27,23 @@ public class Alien {
         logic = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainGame.pers.room==-6&&x>500&&!MainGame.pers.inTranport){
+                if(MainGame.pers.room==-2&&x>500&&!MainGame.pers.inTranport){
                     if(anim!=null && anim.isRunning())return;
                     speed=-1;
                     if(MainGame.pers.getX()>x){
+                        blaster.setX(x+image.getWidth(null)-5);
+                        blaster.setY(y+12);
                         blaster.blasterShot(1);
-                        image = new ImageIcon("image/alien/alienSh.png").getImage();
-                        blaster.setX(x);
-                        blaster.setY(y+50);
-                    }else{
-                        blaster.blasterShot(-1);
                         image = new ImageIcon("image/alien/alienShL.png").getImage();
-                        blaster.setX(x+ image.getWidth(null));
-                        blaster.setY(y+50);
+
+                    }else{
+                        blaster.setX(x-blaster.getImage().getWidth(null)+5);
+                        blaster.setY(y+12);
+                        blaster.blasterShot(-1);
+                        image = new ImageIcon("image/alien/alienSh.png").getImage();
+
                     }
-                    Anim();
+                    //Anim();
                 }
             }
         });

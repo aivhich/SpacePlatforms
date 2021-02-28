@@ -20,7 +20,7 @@ public class Pers implements KeyListener {
     public static int y = groundY - image.getHeight(null)-3;
     Timer anim, jump, down;
     int speed;
-    int room;
+    public int room;
     boolean home = true;
     boolean Open = false;
     boolean reRead = false;
@@ -205,7 +205,7 @@ public class Pers implements KeyListener {
             anim.stop();
             MainGame.sound.close();
         }
-
+        System.out.println(room);
     }
 
     int ymin = y;

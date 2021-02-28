@@ -96,7 +96,7 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         computer = new Computer(400, 0);
         rover = new Rover();
-        alien = new Alien(14100, 100);
+        alien = new Alien(5100, 100);
 
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);

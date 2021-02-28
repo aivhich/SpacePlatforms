@@ -1,5 +1,7 @@
 package Game.blaster;
 
+import Game.MainGame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,8 +12,13 @@ public class Blaster {
     Shot shot = new Shot();
 
     public void blasterShot(int azm){
-        shot.shot(x, y, azm);
-        System.out.print("ok");
+        if(shot.shoting!=null && shot.shoting.isRunning())return;
+        System.out.println("starting");
+        shot.setX(x);
+        shot.setY(y);
+        shot.azm=azm;
+        shot.run();
+        MainGame.panel.repaint();
     }
 
     public Shot getShot() {

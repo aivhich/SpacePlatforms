@@ -37,7 +37,7 @@ public class MenuFrame {
                 super.paintComponent(g);
                 g.drawImage(fon, 0, 0,null);
                 g.drawImage(sun, Xsun, Ysun,null);
-                g.drawImage(mars.getImage(), mars.getX(), mars.getY(), null);
+                //g.drawImage(mars.getImage(), mars.getX(), mars.getY(), null);
             }
         };
         panel.setLayout(null);
