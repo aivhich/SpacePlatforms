@@ -96,8 +96,7 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         computer = new Computer(400, 0);
         rover = new Rover();
-        alien = new Alien(5100, 100);
-
+        alien = new Alien(frame.getWidth()*5+100, 100);
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);
         frame.add(panel);
@@ -137,8 +136,8 @@ public class MainGame {
         for(int i=0; i<3; i++){
             g.drawImage(aircar.engeens[i].getImg(), aircar.engeens[i].getX(), aircar.engeens[i].getY(), null);
         }
-        g.drawImage(alien.blaster.getImage(), alien.blaster.getX(), alien.blaster.getY(), null);
-        g.drawImage(alien.blaster.getShot().getImage(), alien.blaster.getShot().getX(), alien.blaster.getShot().getY(), null);
+        if(alien.blaster.isVisible())g.drawImage(alien.blaster.getImage(), alien.blaster.getX(), alien.blaster.getY(), null);
+        if(alien.blaster.getShot().isVisible())g.drawImage(alien.blaster.getShot().getImage(), alien.blaster.getShot().getX(), alien.blaster.getShot().getY(), null);
         g.drawImage(pers.getImage(), pers.getX(), pers.getY(), null);
 
     }

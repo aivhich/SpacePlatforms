@@ -27,21 +27,35 @@ public class Alien {
         logic = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainGame.pers.room==-2&&x>500&&!MainGame.pers.inTranport){
-                    if(anim!=null && anim.isRunning())return;
-                    speed=-1;
+                if(MainGame.pers.room==-4&&x>500&&!MainGame.pers.inTranport){
                     if(MainGame.pers.getX()>x){
-                        blaster.setX(x+image.getWidth(null)-5);
-                        blaster.setY(y+12);
-                        blaster.blasterShot(1);
-                        image = new ImageIcon("image/alien/alienShL.png").getImage();
-
+                        speed=1;
+                        if(MainGame.pers.getX()>x-300) {
+                            blaster.setVisible(true);
+                            blaster.getShot().setVisible(true);
+                            blaster.setX(x + image.getWidth(null) - 5);
+                            blaster.setY(y + 12);
+                            blaster.setImage(new ImageIcon("image/alien/blasterL.png").getImage());
+                            blaster.blasterShot(1);
+                            image = new ImageIcon("image/alien/alienShL.png").getImage();
+                        }else {
+                            if(anim!=null && anim.isRunning())return;
+                            Anim();
+                        }
                     }else{
-                        blaster.setX(x-blaster.getImage().getWidth(null)+5);
-                        blaster.setY(y+12);
-                        blaster.blasterShot(-1);
-                        image = new ImageIcon("image/alien/alienSh.png").getImage();
-
+                        speed=-1;
+                        if(MainGame.pers.getX()>x-300) {
+                            blaster.setVisible(true);
+                            blaster.getShot().setVisible(true);
+                            blaster.setX(x - blaster.getImage().getWidth(null) + 5);
+                            blaster.setY(y + 12);
+                            blaster.setImage(new ImageIcon("image/alien/blaster.png").getImage());
+                            blaster.blasterShot(-1);
+                            image = new ImageIcon("image/alien/alienSh.png").getImage();
+                        }else {
+                            if(anim!=null && anim.isRunning())return;
+                            Anim();
+                        }
                     }
                     //Anim();
                 }

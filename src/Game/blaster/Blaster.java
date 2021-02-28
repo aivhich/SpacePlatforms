@@ -9,15 +9,16 @@ public class Blaster {
     Image image = new ImageIcon("image/alien/blaster.png").getImage();
     int x, y;
     boolean visible;
-    Shot shot = new Shot();
+    volatile Shot shot = new Shot();
 
     public void blasterShot(int azm){
         if(shot.shoting!=null && shot.shoting.isRunning())return;
-        System.out.println("starting");
-        shot.setX(x);
-        shot.setY(y);
-        shot.azm=azm;
-        shot.run();
+        else {
+            shot.setX(x);
+            shot.setY(y);
+            shot.azm = azm;
+            shot.run();
+        }
         MainGame.panel.repaint();
     }
 

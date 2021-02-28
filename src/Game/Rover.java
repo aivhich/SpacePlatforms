@@ -9,7 +9,7 @@ import static Game.MainGame.*;
 
 public class Rover implements Collision {
     Image image = new ImageIcon("image/rover.png").getImage();
-    int x=10200, y=MainGame.groundY-image.getHeight(null);
+    int x= frame.getWidth()*5-400, y=MainGame.groundY-image.getHeight(null);
     Rover(){
 
     }

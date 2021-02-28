@@ -2,6 +2,7 @@ package Game.blaster;
 
 import Game.MainGame;
 import Game.interfase.Collision;
+import GamePlatformer.MainGamePlatform;
 
 import javax.lang.model.AnnotatedConstruct;
 import javax.swing.*;
@@ -13,8 +14,8 @@ public class Shot extends Thread  implements Collision {
     Image image = new ImageIcon("image/alien/Shot.png").getImage();
     int x, y;
     boolean visible;
-    int speed, k=3;
-    Timer shoting;
+    int speed, k=8;
+    volatile Timer shoting;
     int azm;
 
     void shot(int azm){
@@ -23,9 +24,10 @@ public class Shot extends Thread  implements Collision {
             @Override
             public void actionPerformed(ActionEvent e) {
                 x+=speed*k;
-                if(collisionShot(x, y, MainGame.pers.getX(), MainGame.pers.getY(), image, MainGame.pers.getImage(), 20)){
-                    System.out.println("yes");
-                    System.exit(0);
+                if(collisionShot(x, y, MainGame.pers.getX(), MainGame.pers.getY(), image, MainGame.pers.getImage(), 0)){
+                    MainGame.frame.setVisible(false);
+                    MainGame.frame.dispose();
+                    new MainGamePlatform();
                     shoting.stop();
                 }
                 if(x<0&&x>MainGame.frame.getWidth()) System.exit(0);

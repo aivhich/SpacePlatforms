@@ -109,22 +109,23 @@ public class Aircar extends Thread {
         });
         Down.start();
     }
-    int st;
+    int st=1;
     int nCadr = 0;
     public void motion(){
         Motion = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x += thrust * speed*3;
+                x += thrust * speed*8;
                 pers.setY(aircar.getY()+12);
                 for (int w = 0; w < 3; w++) {
-                    engeens[w].setX(engeens[w].getX() + (thrust * speed*3));
+                    engeens[w].setX(engeens[w].getX() + (thrust * speed*8));
                     if (aircar.Up != null && aircar.Up.isRunning()) {
-                        if (speed > 0)
-                            pers.setX(aircar.getX()+aircar.getImg().getWidth(null)-83);
+                        if (speed > 0) {
+                            pers.setX(aircar.getX() + aircar.getImg().getWidth(null) - 83);
                             pers.setImage(new ImageIcon("image/Pers/humansitL.png").getImage());
                             engeens[w].setImg(new ImageIcon("image/aircar/engeen" + st + "R.png").getImage());
-                        if(pers.isInTranport())img = new ImageIcon("image/aircar/aircarR0.png").getImage();
+                            if (pers.isInTranport()) img = new ImageIcon("image/aircar/aircarR0.png").getImage();
+                        }
                         if (speed < 0) {
                             pers.setX(aircar.getX()+49);
                             pers.setImage(new ImageIcon("image/Pers/humansitR.png").getImage());

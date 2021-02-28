@@ -167,6 +167,7 @@ public class Pers implements KeyListener {
         });
         anim.start();
         Allcolision();
+        System.out.println(room);
     }
 
     void Allcolision(){
