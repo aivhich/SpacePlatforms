@@ -24,6 +24,7 @@ public class Shot {
                 if(x> MainGame.frame.getWidth()||x<0){
                     visible=false;
                     shoting.stop();
+                    System.out.print("stop");
                 }
             }
         });

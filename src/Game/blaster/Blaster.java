@@ -11,6 +11,7 @@ public class Blaster {
 
     public void blasterShot(int azm){
         shot.shot(x, y, azm);
+        System.out.print("ok");
     }
 
     public Shot getShot() {
