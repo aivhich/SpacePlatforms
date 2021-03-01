@@ -18,6 +18,7 @@ public class Shot extends Thread  implements Collision {
     volatile Timer shoting;
     int azm;
 
+
     void shot(int azm){
         speed = azm;
         shoting = new Timer(3, new ActionListener() {
@@ -25,9 +26,7 @@ public class Shot extends Thread  implements Collision {
             public void actionPerformed(ActionEvent e) {
                 x+=speed*k;
                 if(collisionShot(x, y, MainGame.pers.getX(), MainGame.pers.getY(), image, MainGame.pers.getImage(), 0)){
-                    MainGame.frame.setVisible(false);
-                    MainGame.frame.dispose();
-                    new MainGamePlatform();
+                    MainGame.levelFrame();
                     shoting.stop();
                 }
                 if(x<0&&x>MainGame.frame.getWidth()) System.exit(0);

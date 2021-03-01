@@ -30,7 +30,9 @@ public class Alien {
                 if(MainGame.pers.room==-4&&x>500&&!MainGame.pers.inTranport){
                     if(MainGame.pers.getX()>x){
                         speed=1;
-                        if(MainGame.pers.getX()>x-300) {
+                        if(MainGame.pers.getX()>x-500) {
+                            if(anim!=null && anim.isRunning())return;
+                            anim.stop();
                             blaster.setVisible(true);
                             blaster.getShot().setVisible(true);
                             blaster.setX(x + image.getWidth(null) - 5);
@@ -38,13 +40,16 @@ public class Alien {
                             blaster.setImage(new ImageIcon("image/alien/blasterL.png").getImage());
                             blaster.blasterShot(1);
                             image = new ImageIcon("image/alien/alienShL.png").getImage();
+                            logic.stop();
                         }else {
                             if(anim!=null && anim.isRunning())return;
                             Anim();
                         }
                     }else{
                         speed=-1;
-                        if(MainGame.pers.getX()>x-300) {
+                        if(MainGame.pers.getX()>x-500) {
+                            if(anim!=null && anim.isRunning())return;
+                            anim.stop();
                             blaster.setVisible(true);
                             blaster.getShot().setVisible(true);
                             blaster.setX(x - blaster.getImage().getWidth(null) + 5);
@@ -52,6 +57,7 @@ public class Alien {
                             blaster.setImage(new ImageIcon("image/alien/blaster.png").getImage());
                             blaster.blasterShot(-1);
                             image = new ImageIcon("image/alien/alienSh.png").getImage();
+                            logic.stop();
                         }else {
                             if(anim!=null && anim.isRunning())return;
                             Anim();
@@ -73,7 +79,7 @@ public class Alien {
             public void actionPerformed(ActionEvent e) {
                if(speed>0) image = new ImageIcon("image/alien/alienL"+i+".png").getImage();
                if(speed<0) image = new ImageIcon("image/alien/alien"+i+".png").getImage();
-               if(i>8){
+               if(i>7){
                    cadr++;
                    i=0;
                }

@@ -5,6 +5,7 @@ import Game.car.Aircar;
 import Game.station.ModuleOxg;
 import Game.station.Station;
 import Game.station.things.Computer;
+import GamePlatformer.MainGamePlatform;
 //import javazoom.jl.decoder.JavaLayerException;
 //import javazoom.jl.player.AudioDevice;
 //import javazoom.jl.player.JavaSoundAudioDevice;
@@ -142,6 +143,12 @@ public class MainGame {
 
     }
 
+
+    public static void levelFrame(){
+        MainGame.frame.setVisible(false);
+        MainGame.frame.dispose();
+        new MainGamePlatform();
+    }
 
 //    static class Music extends Thread {
 //        @Override
