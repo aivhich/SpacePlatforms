@@ -97,6 +97,7 @@ public class MainGame {
         mountain = new Mountain(10, groundY-478);
         computer = new Computer(400, 0);
         rover = new Rover();
+        rover.run();
         alien = new Alien(frame.getWidth()*5+100, 100);
         aircar = new Aircar(1280, groundY);
         greenhouse = new Greenhouse(2300, groundY-113);

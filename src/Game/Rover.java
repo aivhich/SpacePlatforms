@@ -4,14 +4,39 @@ import Game.interfase.Collision;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static Game.MainGame.*;
 
-public class Rover implements Collision {
+public class Rover extends Thread implements Collision{
     Image image = new ImageIcon("image/rover.png").getImage();
     int x= frame.getWidth()*5-400, y=MainGame.groundY-image.getHeight(null);
+    boolean visible=false;
+    Timer Logic;
+
+
     Rover(){
 
+    }
+
+    void logic(){
+        Logic = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!visible)image = new ImageIcon("image/null.png").getImage();
+                else if(visible) image = new ImageIcon("image/rover.png").getImage();
+                if(npc[0].task) visible=true;
+                else{ visible=false;}
+            }
+        });
+        Logic.start();
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        logic();
     }
 
     void collis(){

@@ -162,19 +162,19 @@ public class Pers implements KeyListener {
                     speed=-1;
                     refraiming();
                 }
+                Allcolision();
                 MainGame.panel.repaint();
             }
         });
         anim.start();
-        Allcolision();
         System.out.println(room);
     }
 
     void Allcolision(){
         for(int  i =0; i<1; i++) MainGame.npc[i].nameCollis();
         rover.collis();
-        DoorAircar();
-        doors();
+        if(room!=-4)DoorAircar();
+        //doors();
     }
 
     void go(){

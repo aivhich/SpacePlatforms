@@ -16,6 +16,7 @@ public class Npc extends Thread implements Collision{
     private String name, rank;
     public static JLabel Lstr;
     Timer anim, Logic;
+    boolean task = false;
 
     private boolean visible=true;
     int ValDialog = 0;
@@ -82,8 +83,9 @@ public class Npc extends Thread implements Collision{
     void discussing(){
         dialog.setX(x+image.getWidth(null));
         dialog.setY(y);
-        if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Оправтесь в экспедицию и найдите место для посадки корабля с провизией и новыми членами экипажа. И доставте их на станцию</html>");
+        if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Найдите ровер и почините его.</html>");
         if(ValDialog==0) tasksL.setText("<html>Задание:<br>Найдите ровер и почините его.</html>");
+        task=true;
         dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
         dialog.setVisible(true);
         panel.repaint();
@@ -136,8 +138,8 @@ public class Npc extends Thread implements Collision{
             pers.discussCollis = false;
             messageL.setText("");
             dialog.setVisible(false);
+            dialog.getMsgText().setText("");
             Lstr.setText("");
-            messageL.setText("");
         }
         panel.repaint();
     }
@@ -201,6 +203,15 @@ public class Npc extends Thread implements Collision{
     public boolean isVisible() {
         return visible;
     }
+
+    public boolean isTask() {
+        return task;
+    }
+
+    public void setTask(boolean task) {
+        this.task = task;
+    }
+
 
     public void setVisible(boolean visible) {
         this.visible = visible;

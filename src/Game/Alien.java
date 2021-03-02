@@ -7,14 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static Game.MainGame.frame;
-import static Game.MainGame.panel;
+import static Game.MainGame.*;
 
 public class Alien {
     private Image image = new ImageIcon("image/alien/alien0.png").getImage();
     private int x, y;
     Timer anim, logic;
     int speed;
+    boolean visible;
     Blaster blaster = new Blaster();
 
     Alien(int x, int y) {
@@ -27,10 +27,13 @@ public class Alien {
         logic = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(MainGame.pers.room==-4&&x>500&&!MainGame.pers.inTranport){
+                if(MainGame.pers.inTranport||!npc[0].task) visible=false;
+                else if(npc[0].task) visible=true;
+                if(!visible)image = new ImageIcon("image/null.png").getImage();
+                if(MainGame.pers.room==-4&&!MainGame.pers.inTranport&&visible){
                     if(MainGame.pers.getX()>x){
                         speed=1;
-                        if(MainGame.pers.getX()>x-500) {
+                        if(MainGame.pers.getX()<x+800) {
                             if(anim!=null && anim.isRunning())return;
                             anim.stop();
                             blaster.setVisible(true);
@@ -47,7 +50,7 @@ public class Alien {
                         }
                     }else{
                         speed=-1;
-                        if(MainGame.pers.getX()>x-500) {
+                        if(MainGame.pers.getX()>x-800) {
                             if(anim!=null && anim.isRunning())return;
                             anim.stop();
                             blaster.setVisible(true);
