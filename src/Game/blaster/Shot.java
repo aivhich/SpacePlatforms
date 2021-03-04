@@ -1,6 +1,7 @@
 package Game.blaster;
 
 import Game.MainGame;
+import Game.Pers;
 import Game.interfase.Collision;
 import GamePlatformer.MainGamePlatform;
 
@@ -27,6 +28,7 @@ public class Shot extends Thread  implements Collision {
                 x+=speed*k;
                 if(collisionShot(x, y, MainGame.pers.getX(), MainGame.pers.getY(), image, MainGame.pers.getImage(), 0)){
                     MainGame.levelFrame();
+                    MainGame.pers.lvl=1;
                     shoting.stop();
                 }
                 if(x<0&&x>MainGame.frame.getWidth()) System.exit(0);
