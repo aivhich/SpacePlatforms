@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class MainGamePlatform {
     public static JFrame frame;
     public static JPanel panel;
-    int groundY;
+    static int groundY;
     static Plato[] plato = new Plato[20];
 
     static GamePlatformer.Pers pers;
@@ -17,8 +17,8 @@ public class MainGamePlatform {
     Image fontask = new ImageIcon("image/fonTask.png").getImage();
     Timer taskT;
 
-    static int[] plX = {-5000,-4700,-4500,-4200,-4000,-3800,-3600,-3400, -3200, -3500, -3000, -2800, -2300, -2000, -1800, -1500, -1300, -1100, -800, -500};
-    static int[] plY = {100,200,300,200,300,400,500,400,200,100,200,300,400,500,600,500,300,400,500,600};
+    static int[] plX = new int[20];
+    static int[] plY = new int[20];
 
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,12 +29,25 @@ public class MainGamePlatform {
         frame.setSize(size.width,size.height-20);
         frame.setLocation(0,0);
 
-        groundY =frame.getHeight()-111;
+        groundY =MainGamePlatform.frame.getHeight()-111;
         pers = new Pers();
-        for(int i=0; i<20; i++) {
+        plato[0] = new Plato();
+        plX[0]=MainGamePlatform.frame.getWidth()-600;
+        plY[0]=800;
+        plato[0].setX(plX[0]);
+        plato[0].setY(plY[0]);
+        for(int i=1; i<20; i++) {
             plato[i] = new Plato();
-            plato[i].setX(plX[i]);
+            plX[i]=(plX[i-1]-800)+(int) (Math.random() * (plX[i-1]-400));
+            if(plY[i-1]<100) {
+                plY[i] = (plY[i - 1] + 300) + (int) (Math.random() * (plY[i - 1] + 100));
+            }else if(plY[i-1]>800){
+                plY[i] = (plY[i - 1] - 300) + (int) (Math.random() * (plY[i - 1] - 100));
+            }else{
+                plY[i] = (plY[i - 1] - 200) + (int) (Math.random() * (plY[i - 1] -400));
+            }
             plato[i].setY(plY[i]);
+            plato[i].setX(plX[i]);
         }
         for(int i = 0; i<3; i++) {
             ground[i]= new Ground();
@@ -67,11 +80,10 @@ public class MainGamePlatform {
     }
 
     void NewTask(){
-        taskT = new Timer(5000, new ActionListener() {
+        taskT = new Timer(2000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fontask = new ImageIcon("image/fonTask.png").getImage();
-
                 taskT.stop();
                 fontask = new ImageIcon("image/null.png").getImage();
                 panel.repaint();

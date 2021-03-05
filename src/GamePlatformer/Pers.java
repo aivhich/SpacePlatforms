@@ -77,7 +77,9 @@ public class Pers implements KeyListener {
                         } else if (!home) {
                             Anim();
                         }
-                    }else{Anim();}
+                    }else{
+                        Anim();
+                    }
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = 1;
@@ -201,12 +203,20 @@ public class Pers implements KeyListener {
         //System.out.println(room);
     }
 
-    int fi, Yk;
+    int yp=200, yb;
     void Jump(){
+        yb=y;
         jump = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //
+                x-=speed*2+1;
+                y-=7;
+                if(y<yb-yp){
+                    jump.stop();
+                    if (down != null && down.isRunning()) return;
+                    Down();
+                }
+                MainGamePlatform.panel.repaint();
             }
         });
         jump.start();
@@ -216,21 +226,15 @@ public class Pers implements KeyListener {
         down = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();
-                if (speed > 0) image = new ImageIcon("image/pers/humanl" + i + ".png").getImage();
-                i++;
-                if (i > 4) {
-                    i = 0;
-                    y += k * 3;
-                }
-                if(y+image.getHeight(null)<groundY-20) {
-                    x += k * speed;
-
-                }else{
-                    y=groundY-image.getHeight(null);
-                    down.stop();
-                }
-                rePanel();
+               if(y+ image.getHeight(null)>groundY) {
+                   x -= speed * 2 + 1;
+                   y += 7;
+               }
+               else{
+                   y=MainGamePlatform.groundY-image.getHeight(null);
+                   down.stop();
+               }
+               MainGamePlatform.panel.repaint();
             }
         });
         down.start();
