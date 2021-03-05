@@ -9,13 +9,16 @@ public class MainGamePlatform {
     public static JFrame frame;
     public static JPanel panel;
     int groundY;
-    Plato plato[] = new Plato[20];
+    static Plato[] plato = new Plato[20];
 
     static GamePlatformer.Pers pers;
     Ground []ground = new Ground[3];
     Image fon = new ImageIcon("image/alienStation/fon.png").getImage();
     Image fontask = new ImageIcon("image/fonTask.png").getImage();
     Timer taskT;
+
+    static int[] plX = {-5000,-4700,-4500,-4200,-4000,-3800,-3600,-3400, -3200, -3500, -3000, -2800, -2300, -2000, -1800, -1500, -1300, -1100, -800, -500};
+    static int[] plY = {100,200,300,200,300,400,500,400,200,100,200,300,400,500,600,500,300,400,500,600};
 
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,8 +33,8 @@ public class MainGamePlatform {
         pers = new Pers();
         for(int i=0; i<20; i++) {
             plato[i] = new Plato();
-            plato[i].setX(30 + (int) (Math.random() * (MainGamePlatform.frame.getWidth()-plato[i].getImage().getWidth(null))));
-            plato[i].setY(50 + (int) (Math.random() * MainGamePlatform.frame.getHeight()-100));
+            plato[i].setX(plX[i]);
+            plato[i].setY(plY[i]);
         }
         for(int i = 0; i<3; i++) {
             ground[i]= new Ground();
@@ -51,7 +54,7 @@ public class MainGamePlatform {
                     g.drawImage(ground[i].getImage(), ground[i].getX(), ground[i].getY(), null);
                 }
                 g.drawImage(pers.getImage(), pers.getX(), pers.getY(),null);
-                for(int i=0; i<3; i++) {
+                for(int i=0; i<20; i++) {
                     g.drawImage(plato[i].getImage(), plato[i].getX(), plato[i].getY(), null);
                 }
                 g.drawImage(fontask, 0, 0, frame.getWidth(), frame.getHeight(), null);

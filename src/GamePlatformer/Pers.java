@@ -33,7 +33,7 @@ public class Pers implements KeyListener {
 
     boolean Thingscollis= false;
     boolean collis = true;
-    int frX, frY;
+    int frX, frY, xf=1;
 
     public Pers() {
         if(lvl==0) MainGame.frame.addKeyListener(this);
@@ -102,6 +102,9 @@ public class Pers implements KeyListener {
                     aircar.motion();
                 }
                 break;
+            case KeyEvent.VK_W:
+                Jump();
+                break;
             case KeyEvent.VK_R:
                 if(inTranport) {
                     if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
@@ -147,10 +150,12 @@ public class Pers implements KeyListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 go();
-                if(x<-50){
+                if((x<-50)&&speed<0){
                     x=MainGamePlatform.frame.getWidth()-50;
-                }else if(x>MainGamePlatform.frame.getWidth()){
+                    refraiming();
+                }else if((x>MainGamePlatform.frame.getWidth())&&speed>0){
                     x=10;
+                    refraiming();
                 }
                 reFrame();
                 Allcolision();
@@ -196,27 +201,12 @@ public class Pers implements KeyListener {
         //System.out.println(room);
     }
 
-    int ymin = y;
+    int fi, Yk;
     void Jump(){
-        k=3;
-        ymin=y;
-        jump = new Timer(20, new ActionListener() {
+        jump = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();
-                if (speed > 0) image = new ImageIcon("image/pers/humanl" + i + ".png").getImage();
-                a++;
-                x += k * speed;
-                y += k*-2;
-                rePanel();
-                if (a > 4) {
-                    a =0;
-                    i+=1;
-                }
-                if(y<ymin-80){
-                    jump.stop();
-                    if (down!= null && down.isRunning()) return; Down();
-                }
+                //
             }
         });
         jump.start();
@@ -318,31 +308,9 @@ public class Pers implements KeyListener {
     }
 
     public void refraiming(){
-        reFrame();
-        if(!reRead) {
-            if (inTranport) speed = aircar.speed;
-            room += -speed;
-        }else{
-            speed=-room;
-            reRead=false;
+        for(int i=0; i<20; i++){
+            MainGamePlatform.plato[i].setX(MainGamePlatform.plato[i].getX()-(MainGamePlatform.frame.getWidth()*(speed)));
+            MainGamePlatform.panel.repaint();
         }
-        station.setX(station.getX()+frX*(-speed));
-        moduleOxg.setX(moduleOxg.getX()+frX*(-speed));
-        mountain.setX(mountain.getX()+frX*(-speed));
-        greenhouse.setX(greenhouse.getX()+frX*(-speed));
-        for(int i =0; i<1; i++) npc[i].setX(npc[i].getX()+frX*(-speed));
-        computer.setX(computer.getX()+frX*(-speed));
-        alien.setX(alien.getX()+frX*(-speed));
-        if(!inTranport) {
-            if(speed==1)x=10;
-            if(speed==-1)x=frX- image.getWidth(null)-10;
-            aircar.setX(aircar.getX() + frX * (-speed));
-            for (int i = 0; i < 3; i++) aircar.engeens[i].setX(aircar.engeens[i].getX() + frX * (-speed));
-        }else{
-            if(aircar.speed==1)aircar.setX(10);
-            if(aircar.speed==-1)aircar.setX(frX- aircar.getImg().getWidth(null)-10);
-            for (int i = 0; i < 3; i++) aircar.engeens[i].setX(aircar.getX()+(85*i));
-        }
-        for(int i=0; i<Station.gateway.length; i++) Station.gateway[i].setX(Station.gateway[i].getX()+frX*(-speed));
     }
 }
