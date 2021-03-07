@@ -105,6 +105,7 @@ public class Pers implements KeyListener {
                 }
                 break;
             case KeyEvent.VK_W:
+                if ((jump != null && jump.isRunning())||(down != null && down.isRunning())) return;
                 Jump();
                 break;
             case KeyEvent.VK_R:
@@ -203,17 +204,18 @@ public class Pers implements KeyListener {
         //System.out.println(room);
     }
 
-    int yp=200, yb;
+    int ymin = y;
     void Jump(){
-        yb=y;
-        jump = new Timer(10, new ActionListener() {
+        k=3;
+        ymin=y;
+        jump = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x-=speed*2+1;
-                y-=7;
-                if(y<yb-yp){
+                x += k * speed;
+                y += k*-2;
+                if(y<ymin-80){
                     jump.stop();
-                    if (down != null && down.isRunning()) return;
+                    if (down!= null && down.isRunning()) return;
                     Down();
                 }
                 MainGamePlatform.panel.repaint();
@@ -226,15 +228,12 @@ public class Pers implements KeyListener {
         down = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               if(y+ image.getHeight(null)>groundY) {
-                   x -= speed * 2 + 1;
-                   y += 7;
-               }
-               else{
-                   y=MainGamePlatform.groundY-image.getHeight(null);
-                   down.stop();
-               }
-               MainGamePlatform.panel.repaint();
+                x += k * speed;
+                y += k * 3;
+                if((y+100)>MainGamePlatform.groundY+20){
+                    down.stop();
+                }
+                MainGamePlatform.panel.repaint();
             }
         });
         down.start();

@@ -27,13 +27,14 @@ public class MainGamePlatform {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(size.width,size.height-20);
+        groundY = MainGamePlatform.frame.getHeight()-111;
         frame.setLocation(0,0);
 
-        groundY =MainGamePlatform.frame.getHeight()-111;
+
         pers = new Pers();
         plato[0] = new Plato();
-        plX[0]=MainGamePlatform.frame.getWidth()-600;
-        plY[0]=800;
+        plX[0]=MainGamePlatform.frame.getWidth()-700;
+        plY[0]=MainGamePlatform.groundY-150;
         plato[0].setX(plX[0]);
         plato[0].setY(plY[0]);
         for(int i=1; i<20; i++) {
@@ -41,10 +42,10 @@ public class MainGamePlatform {
             plX[i]=(plX[i-1]-800)+(int) (Math.random() * (plX[i-1]-400));
             if(plY[i-1]<100) {
                 plY[i] = (plY[i - 1] + 300) + (int) (Math.random() * (plY[i - 1] + 100));
-            }else if(plY[i-1]>800){
+            }else if(plY[i-1]>MainGamePlatform.groundY-200){
                 plY[i] = (plY[i - 1] - 300) + (int) (Math.random() * (plY[i - 1] - 100));
             }else{
-                plY[i] = (plY[i - 1] - 200) + (int) (Math.random() * (plY[i - 1] -400));
+                plY[i] = (plY[i - 1] - 300) + (int) (Math.random() * (plY[i - 1] -100));
             }
             plato[i].setY(plY[i]);
             plato[i].setX(plX[i]);
