@@ -2,6 +2,7 @@ package GamePlatformer;
 
 import Game.MainGame;
 import Game.TwoMenu;
+import Game.interfase.Collision;
 import Game.station.Station;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.awt.event.KeyListener;
 import static Game.MainGame.*;
 
 
-public class Pers implements KeyListener {
+public class Pers implements KeyListener, Collision {
     private static Image image = new ImageIcon("image/pers/human0.png").getImage();
     private static int x = 795;
     public static int y = groundY - image.getHeight(null)-3;
@@ -31,13 +32,13 @@ public class Pers implements KeyListener {
     int Doorport = 0;
     boolean inTranport = false;
 
+    int platoI=-1;
     boolean Thingscollis= false;
     boolean collis = true;
     int frX, frY, xf=1;
 
     public Pers() {
-        if(lvl==0) MainGame.frame.addKeyListener(this);
-        if(lvl==1) MainGamePlatform.frame.addKeyListener(this);
+        MainGamePlatform.frame.addKeyListener(this);
     }
     public static int getX() {
         return x;
@@ -159,17 +160,25 @@ public class Pers implements KeyListener {
                     x=10;
                     refraiming();
                 }
+                if((y+image.getHeight(null)<MainGamePlatform.groundY)&&platoI>=0)
+                {
+                    for(int  i =0; i<20; i++) {
+                        if(!collisionPlato(MainGamePlatform.plX[i], MainGamePlatform.plY[i], x, y, MainGamePlatform.plato[i].getImage(), image)){
+                            if (down != null && down.isRunning()) return;
+                            Down();
+                        }
+                    }
+                }else if(platoI>=0&&(y+image.getHeight(null)>MainGamePlatform.groundY)){
+                    y=MainGamePlatform.groundY-image.getHeight(null);
+                    platoI=-1;
+                }
                 reFrame();
-                Allcolision();
                 rePanel();
             }
         });
         anim.start();
     }
 
-    void Allcolision(){
-        //doors();
-    }
 
     void go(){
         if(collis&&home) {
@@ -231,6 +240,17 @@ public class Pers implements KeyListener {
                 y += k * 3;
                 if((y+100)>MainGamePlatform.groundY+20){
                     down.stop();
+                }
+                for(int  i =0; i<20; i++) {
+                    if(collisionPlato(MainGamePlatform.plX[i], MainGamePlatform.plY[i], x, y, MainGamePlatform.plato[i].getImage(), image)){
+                        if((MainGamePlatform.plY[i]<y+image.getHeight(null)+10)&&y+image.getHeight(null)<MainGamePlatform.groundY){
+                            platoI=i;
+                            y=MainGamePlatform.plY[i]- image.getHeight(null);
+                            down.stop();
+                        }else if(y+image.getHeight(null)>=MainGamePlatform.groundY){
+                            platoI=-1;
+                        }
+                    }
                 }
                 MainGamePlatform.panel.repaint();
             }

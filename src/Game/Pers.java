@@ -28,7 +28,7 @@ public class Pers implements KeyListener {
     boolean discuss = false;
     boolean died;
     boolean discussCollis = false;
-    public int lvl = 1;
+    public int lvl = 0;
     int Doorport = 0;
     boolean inTranport = false;
 
@@ -37,8 +37,7 @@ public class Pers implements KeyListener {
     int frX, frY;
 
     public Pers() {
-        if(lvl==0)MainGame.frame.addKeyListener(this);
-        if(lvl==1) MainGamePlatform.frame.addKeyListener(this);
+        MainGame.frame.addKeyListener(this);
     }
     public static int getX() {
         return x;
@@ -70,15 +69,13 @@ public class Pers implements KeyListener {
             case KeyEvent.VK_D:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-                    if(lvl==0)Collis(x, y, 1);
+                    Collis(x, y, 1);
                     speed = 1;
-                    if(lvl==0) {
-                        if (collis && home) {
-                            Anim();
-                        } else if (!home) {
-                            Anim();
-                        }
-                    }else{Anim();}
+                    if (collis && home) {
+                        Anim();
+                    } else if (!home) {
+                        Anim();
+                    }
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = 1;
@@ -90,13 +87,12 @@ public class Pers implements KeyListener {
                     if (anim != null && anim.isRunning()) return;
                     if(lvl==0) Collis(x, y, -1);
                     speed = -1;
-                    if(lvl==0) {
-                        if (collis && home) {
-                            Anim();
-                        } else if (!home) {
-                            Anim();
-                        }
-                    }else{Anim();}
+                    if (collis && home) {
+                        Anim();
+                    } else if (!home) {
+                        Anim();
+                    }
+                    Anim();
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = -1;
@@ -165,10 +161,10 @@ public class Pers implements KeyListener {
                 reFrame();
                 if(x>=frX){
                     speed=1;
-                    if(lvl==0)refraiming();
+                    refraiming();
                 }else if(x<=0){
                     speed=-1;
-                    if(lvl==0)refraiming();
+                    refraiming();
                 }
                 Allcolision();
                 rePanel();
@@ -178,11 +174,9 @@ public class Pers implements KeyListener {
     }
 
     void Allcolision(){
-        if(lvl==0) {
-            for (int i = 0; i < 1; i++) MainGame.npc[i].nameCollis();
-            rover.collis();
-            if (room != -4) DoorAircar();
-        }
+        for (int i = 0; i < 1; i++) MainGame.npc[i].nameCollis();
+        rover.collis();
+        if (room != -4) DoorAircar();
         //doors();
     }
 
@@ -289,10 +283,8 @@ public class Pers implements KeyListener {
     }
 
     void reFrame(){
-        if(lvl==0) {
-            frX = frame.getWidth();
-            frY = frame.getHeight();
-        }
+        frX = frame.getWidth();
+        frY = frame.getHeight();
     }
 
     public boolean isInTranport() {

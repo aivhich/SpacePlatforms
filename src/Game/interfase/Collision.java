@@ -12,9 +12,14 @@ public interface Collision {
     }
     default boolean collisionShot(int x, int y,  int persX, int persY, Image imgshot, Image img1, int width){
         if(((persX+img1.getWidth(null)+width>=x+imgshot.getWidth(null))&&(persX-width<x))&&(persY<y&&persY+img1.getHeight(null)>y)){
-            System.out.println(img1.getWidth(null));
-            System.out.println(img1.getHeight(null));
         return true;
         }else{return false;}
+    }
+    default boolean collisionPlato(int px, int py,  int persX, int persY, Image Imgplato, Image ImgP){
+        if((persX>px&&persX+ImgP.getWidth(null)<px+Imgplato.getWidth(null))&&(persY<py)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
