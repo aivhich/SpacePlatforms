@@ -69,7 +69,7 @@ public class Pers implements KeyListener {
             case KeyEvent.VK_D:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-                    if(lvl==0)Collis(x, y, 1);
+
                     speed = 1;
                     if(lvl==0) {
                         if (collis && home) {
@@ -89,7 +89,6 @@ public class Pers implements KeyListener {
             case KeyEvent.VK_A:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-                    if(lvl==0) Collis(x, y, -1);
                     speed = -1;
                     if(lvl==0) {
                         if (collis && home) {
@@ -213,7 +212,7 @@ public class Pers implements KeyListener {
             public void actionPerformed(ActionEvent e) {
                 x += k * speed;
                 y += k*-2;
-                if(y<ymin-80){
+                if(y<ymin-200){
                     jump.stop();
                     if (down!= null && down.isRunning()) return;
                     Down();
@@ -239,19 +238,6 @@ public class Pers implements KeyListener {
         down.start();
     }
 
-    void Collis(int x, int y, int e) {
-        if ((x >= Station.getX()+40 && x+image.getWidth(null) <= (Station.getX() + Station.getImg().getWidth(null)-40))
-                && (y >= Station.getY() && y <= Station.getY() + Station.getImg().getHeight(null))) {
-            collis = true;
-        }else{
-            collis = false;
-            if(speed>0 && e<0){collis=true;}
-            else if(speed<0 && e>0){collis=true;}
-        }
-        if(y+image.getHeight(null)<groundY&&!inTranport){
-            if (down!= null && down.isRunning()) return; Down();
-        }
-    }
 
     void reFrame(){
         if(lvl==0) {
