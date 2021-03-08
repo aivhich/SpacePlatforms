@@ -16,7 +16,7 @@ public interface Collision {
         }else{return false;}
     }
     default boolean collisionPlato(int px, int py,  int persX, int persY, Image Imgplato, Image ImgP){
-        if((persX>px&&persX+ImgP.getWidth(null)<px+Imgplato.getWidth(null))&&(persY<py)){
+        if((persX>px-10&&persX+ImgP.getWidth(null)<px+10+Imgplato.getWidth(null))&&(persY<py)){
             return true;
         }else{
             return false;

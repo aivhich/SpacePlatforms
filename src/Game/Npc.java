@@ -84,7 +84,7 @@ public class Npc extends Thread implements Collision{
         dialog.setX(x+image.getWidth(null));
         dialog.setY(y);
         if(ValDialog==0)dialog.getMsgText().setText("<html>Задание:<br>Найдите ровер и почините его.</html>");
-        if(ValDialog==0) tasksL.setText("<html>Задание:<br>Найдите ровер и почините его.</html>");
+        if(ValDialog==0) tasksL.setText("<html>Задание:<br>Найдите ровер и почините его. Он находиься в правой стороне, нашего двумерного мира.</html>");
         task=true;
         dialog.getMsgText().setBounds(dialog.getX()+5, dialog.getY()-5, 190, 106);
         dialog.setVisible(true);
@@ -128,7 +128,7 @@ public class Npc extends Thread implements Collision{
     }
 
     void nameCollis(){
-        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())){
+        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())&& !pers.Thingscollis){
             Lstr.setText("<html>"+name+"<br>"+rank+"</html>");
             Lstr.setBounds(x, y-50,100,40);
             messageL.setText("Нажмите на E чтобы говорить!");

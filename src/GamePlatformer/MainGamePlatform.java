@@ -1,5 +1,7 @@
 package GamePlatformer;
 
+import Game.MainGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,14 +13,18 @@ public class MainGamePlatform {
     static int groundY;
     static Plato[] plato = new Plato[20];
 
-    static GamePlatformer.Pers pers;
-    Ground []ground = new Ground[3];
+    public static GamePlatformer.Pers pers;
+    static Ground []ground = new Ground[3];
     Image fon = new ImageIcon("image/alienStation/fon.png").getImage();
     Image fontask = new ImageIcon("image/fonTask.png").getImage();
     Timer taskT;
+    static Save Savedata;
 
     static int[] plX = new int[20];
     static int[] plY = new int[20];
+
+
+    Alien alien[] = new Alien[10];
 
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,27 +35,34 @@ public class MainGamePlatform {
         frame.setSize(size.width,size.height-20);
         groundY = MainGamePlatform.frame.getHeight()-111;
         frame.setLocation(0,0);
-
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        Savedata = new Save();
 
         pers = new Pers();
         plato[0] = new Plato();
-        plX[0]=MainGamePlatform.frame.getWidth()-700;
+        
+        plX[0]=MainGamePlatform.frame.getWidth()-900;
         plY[0]=MainGamePlatform.groundY-150;
         plato[0].setX(plX[0]);
         plato[0].setY(plY[0]);
         for(int i=1; i<20; i++) {
             plato[i] = new Plato();
-            plX[i]=(plX[i-1]-800)+(int) (Math.random() * (plX[i-1]-400));
-            if(plY[i-1]<100) {
-                plY[i] = (plY[i - 1] + 300) + (int) (Math.random() * (plY[i - 1] + 100));
-            }else if(plY[i-1]>MainGamePlatform.groundY-200){
-                plY[i] = (plY[i - 1] - 300) + (int) (Math.random() * (plY[i - 1] - 100));
+            plX[i]=plX[i-1]+plato[0].getImage().getWidth(null)+(50+(int) (Math.random() * 150));
+            if(plY[i-1]<100&&(plY[i-1]<(MainGamePlatform.groundY-450))) {
+                plY[i] = plY[i - 1]+(-40) + (int) (Math.random() * (100));
+            }else if(plY[i-1]>(MainGamePlatform.groundY-400)){
+                plY[i] = plY[i - 1]+((-100) + (int) (Math.random() * (- 50)));
             }else{
-                plY[i] = (plY[i - 1] - 300) + (int) (Math.random() * (plY[i - 1] -100));
+                plY[i] = plY[i - 1]-((-50) + (int) (Math.random() * (100)));
             }
             plato[i].setY(plY[i]);
             plato[i].setX(plX[i]);
         }
+
+        for(int i = 0; i<10; i++){
+            //alien[i] = new Alien(800+(int) (Math.random() * 600), groundY);
+        }
+
         for(int i = 0; i<3; i++) {
             ground[i]= new Ground();
             ground[i].setY(groundY);
@@ -57,7 +70,7 @@ public class MainGamePlatform {
         }
         //pers.setImage(new ImageIcon("image/Pers/died.png").getImage());
         pers.setY(groundY-pers.getImage().getHeight(null));
-        pers.setX(frame.getWidth()-200);
+        pers.setX(100);
         NewTask();
         panel = new JPanel() {
             @Override
@@ -67,15 +80,19 @@ public class MainGamePlatform {
                 for(int i=0; i<3; i++){
                     g.drawImage(ground[i].getImage(), ground[i].getX(), ground[i].getY(), null);
                 }
-                g.drawImage(pers.getImage(), pers.getX(), pers.getY(),null);
                 for(int i=0; i<20; i++) {
                     g.drawImage(plato[i].getImage(), plato[i].getX(), plato[i].getY(), null);
                 }
+
+                g.drawImage(pers.getImage(), pers.getX(), pers.getY(),null);
+
                 g.drawImage(fontask, 0, 0, frame.getWidth(), frame.getHeight(), null);
             }
         };
+
         panel.setLayout(null);
         frame.add(panel);
+        //MainGamePlatform.pers.saves(true);
         frame.setVisible(true);
         panel.repaint();
     }

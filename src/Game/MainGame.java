@@ -53,11 +53,10 @@ public class MainGame {
 
     public MainGame() {
         frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(size.width, size.height-20);
         frame.setLocation(0,0);
         groundY = frame.getHeight()-111;
-
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -90,7 +89,6 @@ public class MainGame {
         for(int i = 0; i<1; i++) npc[i] = new Npc(" Mark","Captain",1, 300, 100);
 
         pers = new Pers();
-
         npc[0].run();
         station = new Station(150, groundY-179);
         moduleOxg = new ModuleOxg(station.getX()+station.getImg().getWidth(null), groundY-87);
@@ -104,9 +102,8 @@ public class MainGame {
         frame.add(panel);
         frame.setVisible(true);
         panel.repaint();
+        if(pers.reRead==false)pers.saves(true);
     }
-
-
 
 
     void drowing(Graphics g){

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import static Game.MainGame.*;
 
@@ -37,7 +38,8 @@ public class Pers implements KeyListener {
     int frX, frY;
 
     public Pers() {
-        MainGame.frame.addKeyListener(this);
+        if(lvl==0)MainGame.frame.addKeyListener(this);
+        if(lvl==1) MainGamePlatform.frame.addKeyListener(this);
     }
     public static int getX() {
         return x;
@@ -69,13 +71,15 @@ public class Pers implements KeyListener {
             case KeyEvent.VK_D:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-                    Collis(x, y, 1);
+                    if(lvl==0)Collis(x, y, 1);
                     speed = 1;
-                    if (collis && home) {
-                        Anim();
-                    } else if (!home) {
-                        Anim();
-                    }
+                    if(lvl==0) {
+                        if (collis && home) {
+                            Anim();
+                        } else if (!home) {
+                            Anim();
+                        }
+                    }else{Anim();}
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = 1;
@@ -87,12 +91,13 @@ public class Pers implements KeyListener {
                     if (anim != null && anim.isRunning()) return;
                     if(lvl==0) Collis(x, y, -1);
                     speed = -1;
-                    if (collis && home) {
-                        Anim();
-                    } else if (!home) {
-                        Anim();
-                    }
-                    Anim();
+                    if(lvl==0) {
+                        if (collis && home) {
+                            Anim();
+                        } else if (!home) {
+                            Anim();
+                        }
+                    }else{Anim();}
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = -1;
@@ -161,10 +166,10 @@ public class Pers implements KeyListener {
                 reFrame();
                 if(x>=frX){
                     speed=1;
-                    refraiming();
+                    if(lvl==0)refraiming();
                 }else if(x<=0){
                     speed=-1;
-                    refraiming();
+                    if(lvl==0)refraiming();
                 }
                 Allcolision();
                 rePanel();
@@ -174,9 +179,11 @@ public class Pers implements KeyListener {
     }
 
     void Allcolision(){
-        for (int i = 0; i < 1; i++) MainGame.npc[i].nameCollis();
-        rover.collis();
-        if (room != -4) DoorAircar();
+        if(lvl==0) {
+            for (int i = 0; i < 1; i++) MainGame.npc[i].nameCollis();
+            rover.collis();
+            if (room != -4) DoorAircar();
+        }
         //doors();
     }
 
@@ -283,8 +290,10 @@ public class Pers implements KeyListener {
     }
 
     void reFrame(){
-        frX = frame.getWidth();
-        frY = frame.getHeight();
+        if(lvl==0) {
+            frX = frame.getWidth();
+            frY = frame.getHeight();
+        }
     }
 
     public boolean isInTranport() {
@@ -348,33 +357,33 @@ public class Pers implements KeyListener {
             anim.stop();
             MainGame.sound.close();
         }
-            if (Open&&!inTranport) {
-                if (Doorport < 0) {
-                    x = MainGame.station.gateway[1].getX()+10;
-                    home = false;
-                    reHome();
-                    for(int i =0; i<1; i++){
-                        npc[i].setVisible(false);
-                        computer.setVisible(false);
-                        npc[i].Visible();
-                        computer.Visible();
-                    }
-                } else if (Doorport > 0) {
-                    x = 792;
-                    home = true;
-                    reHome();
-                    for(int i =0; i<1; i++){
-                        npc[i].setVisible(true);
-                        computer.setVisible(true);
-                        npc[i].Visible();
-                        computer.Visible();
-                    }
+        if (Open&&!inTranport) {
+            if (Doorport < 0) {
+                x = MainGame.station.gateway[1].getX()+10;
+                home = false;
+                reHome();
+                for(int i =0; i<1; i++){
+                    npc[i].setVisible(false);
+                    computer.setVisible(false);
+                    npc[i].Visible();
+                    computer.Visible();
                 }
-                MainGame.sound.playSound("sound/door.wav");
-                Open = false;
-                Doorport = 0;
+            } else if (Doorport > 0) {
+                x = 792;
+                home = true;
+                reHome();
+                for(int i =0; i<1; i++){
+                    npc[i].setVisible(true);
+                    computer.setVisible(true);
+                    npc[i].Visible();
+                    computer.Visible();
+                }
             }
-            panel.repaint();
+            MainGame.sound.playSound("sound/door.wav");
+            Open = false;
+            Doorport = 0;
+        }
+        panel.repaint();
     }
     void reHome(){
         if(home) {
@@ -398,6 +407,14 @@ public class Pers implements KeyListener {
 
     public void setHome(boolean home) {
         this.home = home;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
     }
 
     public void refraiming(){
@@ -431,21 +448,41 @@ public class Pers implements KeyListener {
         for(int i=0; i<greenhouse.gateway.length; i++) greenhouse.gateway[i].setX(greenhouse.gateway[i].getX()+frX*(-speed));
     }
 
+    public int getRoom() {
+        return room;
+    }
+
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
     void saves(Boolean read){
         if(read){
+            try {
+                Savedata.read();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
             x = Integer.parseInt(String.valueOf(Savedata.readlist.get(0)));
             y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
             home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
-            inTranport = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(3)));
+            lvl = Integer.parseInt(String.valueOf(Savedata.readlist.get(3)));
             room = Integer.parseInt(String.valueOf(Savedata.readlist.get(4)));
             reRead=true;
+            if(lvl==1){
+                new MainGamePlatform();
+                MainGamePlatform.pers.setX(Integer.parseInt(String.valueOf(Savedata.readlist.get(0))));
+                MainGamePlatform.pers.setY(Integer.parseInt(String.valueOf(Savedata.readlist.get(1))));
+                frame.dispose();
+            }
             refraiming();
             reHome();
+            panel.repaint();
         }else{
             Savedata.list.add(x);
             Savedata.list.add(y);
             Savedata.list.add(home);
-            Savedata.list.add(inTranport);
+            Savedata.list.add(lvl);
             Savedata.list.add(room);
         }
     }

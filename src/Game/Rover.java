@@ -40,9 +40,9 @@ public class Rover extends Thread implements Collision{
     }
 
     void collis(){
-        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())&& !pers.Thingscollis){
+        if (collisionNps(x, y, image, pers.getImage(),150, 150, MainGame.pers.getX(), MainGame.pers.getY())&& !pers.discussCollis){
             messageL.setText("Нажмите H чтобы проверить системы ровера!");
-        }else{
+        }else if(!pers.discussCollis&& !MainGame.pers.Thingscollis){
             messageL.setText("");
         }
         panel.repaint();

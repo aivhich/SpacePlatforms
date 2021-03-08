@@ -1,5 +1,7 @@
 package Game;
 
+import GamePlatformer.MainGamePlatform;
+
 import javax.crypto.IllegalBlockSizeException;
 import javax.swing.*;
 import java.awt.*;
@@ -43,18 +45,14 @@ public class TwoMenu {
         continueB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    MainGame.Savedata.read();
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
                 frame.dispose();
             }
         });
         cancelB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGame.pers.saves(false);
+                if(MainGame.pers.lvl==0){System.out.print("ok");MainGame.pers.saves(false);}
+                else if(MainGame.pers.lvl==1){ MainGamePlatform.pers.saves(false);}
                 MainGame.Savedata.save();
                 System.exit(0);
             }

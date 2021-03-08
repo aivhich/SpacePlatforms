@@ -1,9 +1,12 @@
-package Game;
+package GamePlatformer;
 
-import java.io.*;
+import Game.MainGame;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-
-import static java.lang.Boolean.parseBoolean;
 
 public class Save {
     private static final String PATH = "files/fileworld.txt";

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import static Game.MainGame.*;
 
@@ -70,15 +71,8 @@ public class Pers implements KeyListener, Collision {
             case KeyEvent.VK_D:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-
-                    speed = 1;
-                    if(lvl==0) {
-                        if (collis && home) {
-                            Anim();
-                        } else if (!home) {
-                            Anim();
-                        }
-                    }else{
+                    if (!((down!= null && down.isRunning())||(jump!=null&&jump.isRunning()))) {
+                        speed = 1;
                         Anim();
                     }
                 }else{
@@ -90,14 +84,10 @@ public class Pers implements KeyListener, Collision {
             case KeyEvent.VK_A:
                 if(!inTranport) {
                     if (anim != null && anim.isRunning()) return;
-                    speed = -1;
-                    if(lvl==0) {
-                        if (collis && home) {
-                            Anim();
-                        } else if (!home) {
-                            Anim();
-                        }
-                    }else{Anim();}
+                    if (!((down!= null && down.isRunning())||(jump!=null&&jump.isRunning()))) {
+                        speed = -1;
+                        Anim();
+                    }
                 }else{
                     if (aircar.Motion != null && aircar.Motion.isRunning()) return;
                     aircar.speed = -1;
@@ -163,7 +153,7 @@ public class Pers implements KeyListener, Collision {
                 if((y+image.getHeight(null)<MainGamePlatform.groundY)&&platoI>=0)
                 {
                     for(int  i =0; i<20; i++) {
-                        if(!collisionPlato(MainGamePlatform.plX[i], MainGamePlatform.plY[i], x, y, MainGamePlatform.plato[i].getImage(), image)){
+                        if(!collisionPlato(MainGamePlatform.plato[i].getX(), MainGamePlatform.plato[i].getY(), x, y, MainGamePlatform.plato[i].getImage(), image)){
                             if (down != null && down.isRunning()) return;
                             Down();
                         }
@@ -214,16 +204,24 @@ public class Pers implements KeyListener, Collision {
 
     int ymin = y;
     void Jump(){
-        k=3;
+        k=6;
         ymin=y;
-        jump = new Timer(20, new ActionListener() {
+        jump = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x += k * speed;
+                if(anim!=null&& anim.isRunning()){anim.stop();}
+                x += k * speed*2;
                 y += k*-2;
-                if(y<ymin-200){
+                if((x<-50)&&speed<0){
+                    x=MainGamePlatform.frame.getWidth()-50;
+                    refraiming();
+                }else if((x>MainGamePlatform.frame.getWidth())&&speed>0){
+                    x=10;
+                    refraiming();
+                }
+                if(y<ymin-150){
                     jump.stop();
-                    if (down!= null && down.isRunning()) return;
+                    if ((down!= null && down.isRunning())&&(jump!=null&&jump.isRunning())) return;
                     Down();
                 }
                 MainGamePlatform.panel.repaint();
@@ -232,20 +230,27 @@ public class Pers implements KeyListener, Collision {
         jump.start();
     }
     void Down(){
-        k=4;
-        down = new Timer(20, new ActionListener() {
+        k=6;
+        down = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                x += k * speed;
+                x += k * speed*2;
                 y += k * 3;
+                if((x<-50)&&speed<0){
+                    x=MainGamePlatform.frame.getWidth()-50;
+                    refraiming();
+                }else if((x>MainGamePlatform.frame.getWidth())&&speed>0){
+                    x=10;
+                    refraiming();
+                }
                 if((y+100)>MainGamePlatform.groundY+20){
                     down.stop();
                 }
                 for(int  i =0; i<20; i++) {
-                    if(collisionPlato(MainGamePlatform.plX[i], MainGamePlatform.plY[i], x, y, MainGamePlatform.plato[i].getImage(), image)){
-                        if((MainGamePlatform.plY[i]<y+image.getHeight(null)+10)&&y+image.getHeight(null)<MainGamePlatform.groundY){
+                    if(collisionPlato(MainGamePlatform.plato[i].getX(), MainGamePlatform.plato[i].getY(), x, y, MainGamePlatform.plato[i].getImage(), image)){
+                        if((MainGamePlatform.plato[i].getY()<y+image.getHeight(null)+10)&&y+image.getHeight(null)<MainGamePlatform.groundY){
                             platoI=i;
-                            y=MainGamePlatform.plY[i]- image.getHeight(null);
+                            y=MainGamePlatform.plato[i].getY()- image.getHeight(null);
                             down.stop();
                         }else if(y+image.getHeight(null)>=MainGamePlatform.groundY){
                             platoI=-1;
@@ -317,9 +322,35 @@ public class Pers implements KeyListener, Collision {
     }
 
     public void refraiming(){
+        room+=1*(-speed);
         for(int i=0; i<20; i++){
-            MainGamePlatform.plato[i].setX(MainGamePlatform.plato[i].getX()-(MainGamePlatform.frame.getWidth()*(speed)));
-            MainGamePlatform.panel.repaint();
+            MainGamePlatform.plato[i].setX(MainGamePlatform.plato[i].getX()+(MainGamePlatform.frame.getWidth()*(-speed)));
+        }
+        MainGamePlatform.panel.repaint();
+    }
+    public void saves(Boolean read){
+        if(read){
+            try {
+                Savedata.read();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            x = Integer.parseInt(String.valueOf(Savedata.readlist.get(0)));
+            y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
+            home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
+            lvl = Integer.parseInt(String.valueOf(Savedata.readlist.get(3)));
+            room = Integer.parseInt(String.valueOf(Savedata.readlist.get(4)));
+            reRead=true;
+
+            refraiming();
+            //reHome();
+            panel.repaint();
+        }else{
+            Savedata.list.add(x);
+            Savedata.list.add(y);
+            Savedata.list.add(home);
+            Savedata.list.add(lvl);
+            Savedata.list.add(room);
         }
     }
 }
