@@ -1,7 +1,9 @@
 package GamePlatformer.blaster;
 
+import Game.MainGame;
 import Game.interfase.Collision;
 import GamePlatformer.MainGamePlatform;
+import GamePlatformer.OverGameFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +29,13 @@ public class Shot extends Thread  implements Collision {
                 status=true;
                 if(collisionShot(x, y, MainGamePlatform.pers.getX(), MainGamePlatform.pers.getY(), image, MainGamePlatform.pers.getImage(), 0)){
                     MainGamePlatform.pers.lvl=1;
+                    MainGamePlatform.pers.live--;
+                    MainGamePlatform.liveL.setText("Live: "+MainGamePlatform.pers.live);
+                    if(MainGamePlatform.pers.live<=0&&!MainGamePlatform.pers.gameover){
+                        MainGamePlatform.pers.gameover=true;
+                        new OverGameFrame();
+                        MainGamePlatform.frame.dispose();
+                    }
                     visible=false;
                     status=false;
                     shoting.stop();

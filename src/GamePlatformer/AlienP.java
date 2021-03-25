@@ -34,9 +34,10 @@ public class AlienP extends Thread {
                     } else if (x < MainGamePlatform.pers.getX()) {
                         speed = 1;
                     }
+                    blaster.setVisible(false);
+                    blaster.shot.setVisible(false);
                     if (anim != null && anim.isRunning()) return;
                     Anim();
-                    System.out.print("run");
                 }else {
                     if ((x + 350 >= MainGamePlatform.pers.getX())&&(x<MainGamePlatform.pers.getX()) && (!blaster.getShot().getStatus())) {
                         strike(1);
@@ -44,7 +45,6 @@ public class AlienP extends Thread {
                         strike(-1);
                     }
                     if (anim != null && anim.isRunning()) anim.stop();
-                    System.out.print("stop");
                 }
 
                 MainGamePlatform.panel.repaint();

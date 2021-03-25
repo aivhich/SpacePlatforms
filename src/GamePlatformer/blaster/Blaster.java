@@ -10,7 +10,7 @@ public class Blaster {
     Image image = new ImageIcon("image/alien/blaster.png").getImage();
     int x, y;
     boolean visible;
-    volatile Shot shot = new Shot();
+    public volatile Shot shot = new Shot();
 
     public void blasterShot(int azm){
         if(shot.shoting!=null && shot.shoting.isRunning())return;

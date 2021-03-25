@@ -23,16 +23,14 @@ public class Pers implements KeyListener, Collision {
     Timer anim, jump, down;
     int speed =0;
     public int room;
+    public boolean gameover = false;
     boolean home = true;
-    boolean Open = false;
     boolean reRead = false;
-    boolean discuss = false;
-    boolean died;
-    boolean discussCollis = false;
     public int lvl = 1;
-    int Doorport = 0;
+    public int live = 10;
     boolean inTranport = false;
 
+    int countCoin;
     int platoI=-1;
     boolean Thingscollis= false;
     boolean collis = true;
@@ -67,56 +65,58 @@ public class Pers implements KeyListener, Collision {
 
 
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_D:
-                if(!inTranport) {
-                    if (anim != null && anim.isRunning()) return;
-                    if (!((down!= null && down.isRunning())||(jump!=null&&jump.isRunning()))) {
-                        speed = 1;
-                        Anim();
+        if(!gameover) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_D:
+                    if (!inTranport) {
+                        if (anim != null && anim.isRunning()) return;
+                        if (!((down != null && down.isRunning()) || (jump != null && jump.isRunning()))) {
+                            speed = 1;
+                            Anim();
+                        }
+                    } else {
+                        if (aircar.Motion != null && aircar.Motion.isRunning()) return;
+                        aircar.speed = 1;
+                        aircar.motion();
                     }
-                }else{
-                    if (aircar.Motion != null && aircar.Motion.isRunning()) return;
-                    aircar.speed = 1;
-                    aircar.motion();
-                }
-                break;
-            case KeyEvent.VK_A:
-                if(!inTranport) {
-                    if (anim != null && anim.isRunning()) return;
-                    if (!((down!= null && down.isRunning())||(jump!=null&&jump.isRunning()))) {
-                        speed = -1;
-                        Anim();
+                    break;
+                case KeyEvent.VK_A:
+                    if (!inTranport) {
+                        if (anim != null && anim.isRunning()) return;
+                        if (!((down != null && down.isRunning()) || (jump != null && jump.isRunning()))) {
+                            speed = -1;
+                            Anim();
+                        }
+                    } else {
+                        if (aircar.Motion != null && aircar.Motion.isRunning()) return;
+                        aircar.speed = -1;
+                        aircar.motion();
                     }
-                }else{
-                    if (aircar.Motion != null && aircar.Motion.isRunning()) return;
-                    aircar.speed = -1;
-                    aircar.motion();
-                }
-                break;
-            case KeyEvent.VK_W:
-                if ((jump != null && jump.isRunning())||(down != null && down.isRunning())) return;
-                Jump();
-                break;
-            case KeyEvent.VK_R:
-                if(inTranport) {
-                    if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
-                    aircar.thrust(1);
-                }
-                break;
-            case KeyEvent.VK_F:
-                if(inTranport) {
-                    if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
-                    aircar.thrust(-1);
-                }
-                break;
-            case KeyEvent.VK_P:
-                inAircar();
-                //aircar.CarCollis();
-                break;
-            case KeyEvent.VK_ESCAPE:
-                new TwoMenu();
-                break;
+                    break;
+                case KeyEvent.VK_W:
+                    if ((jump != null && jump.isRunning()) || (down != null && down.isRunning())) return;
+                    Jump();
+                    break;
+                case KeyEvent.VK_R:
+                    if (inTranport) {
+                        if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
+                        aircar.thrust(1);
+                    }
+                    break;
+                case KeyEvent.VK_F:
+                    if (inTranport) {
+                        if (aircar.TThrust != null && aircar.TThrust.isRunning()) return;
+                        aircar.thrust(-1);
+                    }
+                    break;
+                case KeyEvent.VK_P:
+                    inAircar();
+                    //aircar.CarCollis();
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    new TwoMenu();
+                    break;
+            }
         }
         rePanel();
     }
@@ -199,6 +199,7 @@ public class Pers implements KeyListener, Collision {
             anim.stop();
             MainGame.sound.close();
         }
+        coinsCollis();
         //System.out.println(room);
     }
 
@@ -213,7 +214,7 @@ public class Pers implements KeyListener, Collision {
                 if(anim!=null&& anim.isRunning()){anim.stop();}
                 x += k * speed * 2;
                 y += k2*-2;
-
+                coinsCollis();
                 if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();
                 if (speed > 0) image = new ImageIcon("image/pers/humanl" + i + ".png").getImage();
                 i++;
@@ -246,6 +247,7 @@ public class Pers implements KeyListener, Collision {
             public void actionPerformed(ActionEvent e) {
                 x += k * speed*2;
                 y += k * 3;
+                coinsCollis();
                 if((x<-50)&&speed<0){
                     x=MainGamePlatform.frame.getWidth()-50;
                     refraiming();
@@ -331,6 +333,22 @@ public class Pers implements KeyListener, Collision {
         this.home = home;
     }
 
+
+    void coinsCollis(){
+        for(int i = 0; i<15; i++){
+            if((MainGamePlatform.coin[i].getX()<MainGamePlatform.pers.getX()&&MainGamePlatform.coin[i].getX()+MainGamePlatform.coin[i].getImage().getWidth(null)>MainGamePlatform.pers.getX())
+            &&(MainGamePlatform.pers.getY()<MainGamePlatform.coin[i].getY()&&MainGamePlatform.pers.getY()+MainGamePlatform.pers.getImage().getHeight(null)>MainGamePlatform.coin[i].getY()+MainGamePlatform.coin[i].getImage().getHeight(null))){
+                MainGamePlatform.coin[i].setImage(new ImageIcon("null.png").getImage());
+                countCoin++;
+                MainGamePlatform.coinL.setText("Coin: "+countCoin);
+                if(countCoin>15){
+                    new WinFrame();
+                }
+            }
+        }
+        MainGamePlatform.panel.repaint();
+    }
+
     public void refraiming(){
         room+=1*(-speed);
         for(int i=0; i<20; i++){
@@ -338,6 +356,9 @@ public class Pers implements KeyListener, Collision {
         }
         for(int i=0; i<5; i++) {
             MainGamePlatform.alienP[i].setX(MainGamePlatform.alienP[i].getX()+(MainGamePlatform.frame.getWidth()*(-speed)));
+        }
+        for(int i=0; i<15; i++) {
+            MainGamePlatform.coin[i].setX(MainGamePlatform.coin[i].getX()+(MainGamePlatform.frame.getWidth()*(-speed)));
         }
         MainGamePlatform.panel.repaint();
     }

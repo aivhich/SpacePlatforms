@@ -20,6 +20,14 @@ public class MainGamePlatform {
     Timer taskT;
     static Save Savedata;
 
+    static JLabel coinL = new JLabel("Coin: 0");
+    public static JLabel liveL = new JLabel("Live: 10");
+
+    private Font coinF = new Font("TimesRoman", Font.BOLD,18);
+
+
+    public static Coin[] coin = new Coin[15];
+
     static int[] plX = new int[20];
     static int[] plY = new int[20];
 
@@ -37,6 +45,7 @@ public class MainGamePlatform {
         frame.setLocation(0,0);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Savedata = new Save();
+
 
         pers = new Pers();
         plato[0] = new Plato();
@@ -71,9 +80,19 @@ public class MainGamePlatform {
         pers.setX(100);
 
         for(int i = 0; i<5; i++){
-            alienP[i] = new AlienP(0+ (int) (Math.random() * (MainGamePlatform.frame.getWidth()*2)), groundY);
+            alienP[i] = new AlienP(0+ (int) (Math.random() * (MainGamePlatform.frame.getWidth()*5)), groundY);
             alienP[i].setVisible(true);
             alienP[i].run();
+        }
+        for(int i=0; i<10; i++){
+            coin[i]=new Coin();
+            coin[i].setX(plato[i].getX()+(100+ (int) (Math.random() * 500)));
+            coin[i].setY(plato[i].getY()-coin[i].getImage().getWidth(null)-20);
+        }
+        for(int i=10; i<15; i++){
+            coin[i]=new Coin();
+            coin[i].setX(0+ (int) (Math.random() * (MainGamePlatform.frame.getWidth()*5)));
+            coin[i].setY(groundY-coin[i].getImage().getHeight(null)-20);
         }
 
 
@@ -90,11 +109,16 @@ public class MainGamePlatform {
                     g.drawImage(plato[i].getImage(), plato[i].getX(), plato[i].getY(), null);
                 }
 
+                for(int i=0; i<15; i++){
+                    g.drawImage(coin[i].getImage(), coin[i].getX(), coin[i].getY(), null);
+                }
+
                 for(int i = 0; i<5; i++) {
                     g.drawImage(alienP[i].getImage(), alienP[i].getX(), alienP[i].getY(), null);
-                    g.drawImage(alienP[i].getBlaster().getImage(), alienP[i].getBlaster().getX(), alienP[i].getBlaster().getY(), null);
-                    g.drawImage(alienP[i].getBlaster().getShot().getImage(), alienP[i].getBlaster().getShot().getX(), alienP[i].getBlaster().getShot().getY(), null);
+                    if(alienP[i].getBlaster().isVisible())g.drawImage(alienP[i].getBlaster().getImage(), alienP[i].getBlaster().getX(), alienP[i].getBlaster().getY(), null);
+                    if(alienP[i].getBlaster().getShot().isVisible())g.drawImage(alienP[i].getBlaster().getShot().getImage(), alienP[i].getBlaster().getShot().getX(), alienP[i].getBlaster().getShot().getY(), null);
                 }
+
                 g.drawImage(pers.getImage(), pers.getX(), pers.getY(),null);
 
                 g.drawImage(fontask, 0, 0, frame.getWidth(), frame.getHeight(), null);
@@ -103,6 +127,16 @@ public class MainGamePlatform {
 
         panel.setLayout(null);
         frame.add(panel);
+
+        coinL.setBounds(20 , 20, 200, 100);
+        liveL.setBounds(20, 60, 200, 100);
+        coinL.setFont(coinF);
+        liveL.setFont(coinF);
+        panel.add(liveL);
+        panel.add(coinL);
+        coinL.setVisible(true);
+        liveL.setVisible(true);
+
         //MainGamePlatform.pers.saves(true);
         frame.setVisible(true);
         panel.repaint();
