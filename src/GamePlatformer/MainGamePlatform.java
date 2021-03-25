@@ -16,7 +16,7 @@ public class MainGamePlatform {
     public static GamePlatformer.Pers pers;
     static Ground []ground = new Ground[3];
     Image fon = new ImageIcon("image/alienStation/fon.png").getImage();
-    Image fontask = new ImageIcon("image/fonTask.png").getImage();
+    Image fontask = new ImageIcon("image/null.png").getImage();
     Timer taskT;
     static Save Savedata;
 
@@ -24,7 +24,7 @@ public class MainGamePlatform {
     static int[] plY = new int[20];
 
 
-    Alien alien[] = new Alien[10];
+    public static AlienP alienP[] = new AlienP[5];
 
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -59,18 +59,24 @@ public class MainGamePlatform {
             plato[i].setX(plX[i]);
         }
 
-        for(int i = 0; i<10; i++){
-            //alien[i] = new Alien(800+(int) (Math.random() * 600), groundY);
-        }
+
 
         for(int i = 0; i<3; i++) {
             ground[i]= new Ground();
             ground[i].setY(groundY);
             ground[i].setX(-(frame.getWidth())+(ground[i].getImage().getWidth(null)*i));
         }
-        //pers.setImage(new ImageIcon("image/Pers/died.png").getImage());
+
         pers.setY(groundY-pers.getImage().getHeight(null));
         pers.setX(100);
+
+        for(int i = 0; i<5; i++){
+            alienP[i] = new AlienP(0+ (int) (Math.random() * (MainGamePlatform.frame.getWidth()*2)), groundY);
+            alienP[i].setVisible(true);
+            alienP[i].run();
+        }
+
+
         NewTask();
         panel = new JPanel() {
             @Override
@@ -84,6 +90,11 @@ public class MainGamePlatform {
                     g.drawImage(plato[i].getImage(), plato[i].getX(), plato[i].getY(), null);
                 }
 
+                for(int i = 0; i<5; i++) {
+                    g.drawImage(alienP[i].getImage(), alienP[i].getX(), alienP[i].getY(), null);
+                    g.drawImage(alienP[i].getBlaster().getImage(), alienP[i].getBlaster().getX(), alienP[i].getBlaster().getY(), null);
+                    g.drawImage(alienP[i].getBlaster().getShot().getImage(), alienP[i].getBlaster().getShot().getX(), alienP[i].getBlaster().getShot().getY(), null);
+                }
                 g.drawImage(pers.getImage(), pers.getX(), pers.getY(),null);
 
                 g.drawImage(fontask, 0, 0, frame.getWidth(), frame.getHeight(), null);

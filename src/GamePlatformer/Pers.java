@@ -203,6 +203,7 @@ public class Pers implements KeyListener, Collision {
     }
 
     int ymin = y;
+    int k2 = 8;
     void Jump(){
         k=6;
         ymin=y;
@@ -210,8 +211,17 @@ public class Pers implements KeyListener, Collision {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(anim!=null&& anim.isRunning()){anim.stop();}
-                x += k * speed*2;
-                y += k*-2;
+                x += k * speed * 2;
+                y += k2*-2;
+
+                if (speed < 0) image = new ImageIcon("image/pers/human" + i + ".png").getImage();
+                if (speed > 0) image = new ImageIcon("image/pers/humanl" + i + ".png").getImage();
+                i++;
+                if (i > 8) {
+                    i = 0;
+                    MainGame.sound.close();
+                }
+
                 if((x<-50)&&speed<0){
                     x=MainGamePlatform.frame.getWidth()-50;
                     refraiming();
@@ -325,6 +335,9 @@ public class Pers implements KeyListener, Collision {
         room+=1*(-speed);
         for(int i=0; i<20; i++){
             MainGamePlatform.plato[i].setX(MainGamePlatform.plato[i].getX()+(MainGamePlatform.frame.getWidth()*(-speed)));
+        }
+        for(int i=0; i<5; i++) {
+            MainGamePlatform.alienP[i].setX(MainGamePlatform.alienP[i].getX()+(MainGamePlatform.frame.getWidth()*(-speed)));
         }
         MainGamePlatform.panel.repaint();
     }

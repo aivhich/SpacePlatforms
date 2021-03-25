@@ -426,6 +426,7 @@ public class Pers implements KeyListener {
             speed=-room;
             reRead=false;
         }
+
         station.setX(station.getX()+frX*(-speed));
         moduleOxg.setX(moduleOxg.getX()+frX*(-speed));
         rover.setX(rover.getX()+frX*(-speed));

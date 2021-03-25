@@ -66,7 +66,6 @@ public class Alien {
                             Anim();
                         }
                     }
-                    //Anim();
                 }
             }
         });
