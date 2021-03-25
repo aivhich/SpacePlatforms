@@ -16,7 +16,7 @@ public class MainGamePlatform {
     public static GamePlatformer.Pers pers;
     static Ground []ground = new Ground[3];
     Image fon = new ImageIcon("image/alienStation/fon.png").getImage();
-    Image fontask = new ImageIcon("image/null.png").getImage();
+    Image fontask = new ImageIcon("image/fonTask.png").getImage();
     Timer taskT;
     static Save Savedata;
 
