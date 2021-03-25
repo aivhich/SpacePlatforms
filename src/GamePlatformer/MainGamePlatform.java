@@ -58,7 +58,7 @@ public class MainGamePlatform {
             plato[i] = new Plato();
             plX[i]=plX[i-1]+plato[0].getImage().getWidth(null)+(50+(int) (Math.random() * 150));
             if(plY[i-1]<100&&(plY[i-1]<(MainGamePlatform.groundY-450))) {
-                plY[i] = plY[i - 1]+(-40) + (int) (Math.random() * (100));
+                plY[i] = plY[i - 1]+(-40) + (int) (Math.random() * (140));
             }else if(plY[i-1]>(MainGamePlatform.groundY-400)){
                 plY[i] = plY[i - 1]+((-100) + (int) (Math.random() * (- 50)));
             }else{
