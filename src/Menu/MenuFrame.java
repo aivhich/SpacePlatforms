@@ -24,7 +24,9 @@ public class MenuFrame{
     Timer aboutT;
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
     int Xsun = size.width/2-100, Ysun=size.height/2-100;
+
     Image fon = new ImageIcon("image/spacemap2.png").getImage();
     Image sun= new ImageIcon("image/Planet/0.png").getImage();
     Image mars= new ImageIcon("image/Planet/5.png").getImage();

@@ -6,6 +6,7 @@ import java.awt.*;
 public class OverGameFrame {
     public JFrame frame = new JFrame();
     public JPanel panel;
+
     Image fon  = new ImageIcon("image/gameover.png").getImage();
 
     public static Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
