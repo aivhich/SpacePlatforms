@@ -461,14 +461,14 @@ public class Pers implements KeyListener {
         if(read){
             try {
                 Savedata.read();
+                x = Integer.parseInt(String.valueOf(Savedata.readlist.get(0)));
+                y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
+                home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
+                lvl = Integer.parseInt(String.valueOf(Savedata.readlist.get(3)));
+                room = Integer.parseInt(String.valueOf(Savedata.readlist.get(4)));
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            x = Integer.parseInt(String.valueOf(Savedata.readlist.get(0)));
-            y = Integer.parseInt(String.valueOf(Savedata.readlist.get(1)));
-            home = Boolean.parseBoolean(String.valueOf(Savedata.readlist.get(2)));
-            lvl = Integer.parseInt(String.valueOf(Savedata.readlist.get(3)));
-            room = Integer.parseInt(String.valueOf(Savedata.readlist.get(4)));
             reRead=true;
             if(lvl==1){
                 new MainGamePlatform();
